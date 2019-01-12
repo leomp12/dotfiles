@@ -7,6 +7,9 @@
 unset MANPATH # delete if already modifying MANPATH elsewhere
 export MANPATH="$HOME/.npm-packages/share/man:$(manpath)"
 
+# many tweaks and advanced optimizations from grml with grml-zsh-config pkg
+# same as Arch ISO
+
 #
 # -- DO NOT EDIT ABOVE --
 #
