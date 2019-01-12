@@ -55,6 +55,10 @@ editor_cmd = terminal .. " -e " .. editor
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
+-- Autostart additional apps for Xorg.
+awful.util.spawn("unclutter &")
+awful.util.spawn("compton -b")
+
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.floating,
