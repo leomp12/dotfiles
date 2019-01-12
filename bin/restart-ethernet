@@ -1,0 +1,1 @@
+sudo systemctl restart netctl-ifplugd@enp0s31f6.service

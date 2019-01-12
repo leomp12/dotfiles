@@ -1,0 +1,4 @@
+echo '-- WIFI --';
+iw dev wlp1s0 link
+echo '-- WIRED --';
+iw dev enp0s31f6 link
