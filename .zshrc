@@ -11,7 +11,7 @@ export MANPATH="$HOME/.npm-packages/share/man:$(manpath)"
 # same as Arch ISO
 
 #
-# -- DO NOT EDIT ABOVE --
+# -- DO NOT EDIT BELOW --
 #
 
 # Lines configured by zsh-newuser-install
