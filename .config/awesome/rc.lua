@@ -205,8 +205,8 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
-        -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    -- Create the wibox
+    s.mywibox = awful.wibar({ position = "top", screen = s, visible = false, ontop = true })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -262,6 +262,26 @@ globalkeys = gears.table.join(
     ),
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
+
+    -- Custom status bar
+    awful.key({ modkey,           }, "b",
+        function ()
+            awful.screen.connect_for_each_screen(function(s)
+                if s.mywibox.visible then
+                    s.mywibox.visible = false
+                else
+                    s.mywibox.visible = true
+                    -- Remove struts (enable overlap)
+                    s.mywibox:struts({
+                        left   = 0,
+                        top    = 0,
+                        bottom = 0,
+                        right  = 0
+                    })
+                end
+            end)
+        end,
+        {description = "toggle status bar", group = "awesome"}),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
