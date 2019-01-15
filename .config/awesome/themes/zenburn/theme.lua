@@ -58,6 +58,13 @@ theme.titlebar_bg_normal = "#3b4045"
 --theme.border_widget    = "#3b4045"
 -- }}}
 
+-- {{{ Tasklist
+theme.tasklist_disable_icon = true
+theme.tasklist_align = "center"
+theme.tasklist_bg_focus = "#3b4045"
+theme.tasklist_fg_normal = "#7f8c8d"
+-- }}}
+
 -- {{{ Mouse finder
 theme.mouse_finder_color = "#CC9393"
 -- mouse_finder_[timeout|animate_timeout|radius|factor]
