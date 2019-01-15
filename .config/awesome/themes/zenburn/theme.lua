@@ -65,6 +65,11 @@ theme.tasklist_bg_focus = "#3b4045"
 theme.tasklist_fg_normal = "#7f8c8d"
 -- }}}
 
+-- {{{ Wibar
+theme.wibar_border_width = 5
+theme.wibar_border_color = "#3b4045"
+-- }}}
+
 -- {{{ Mouse finder
 theme.mouse_finder_color = "#CC9393"
 -- mouse_finder_[timeout|animate_timeout|radius|factor]
