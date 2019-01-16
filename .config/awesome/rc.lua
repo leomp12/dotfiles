@@ -278,13 +278,23 @@ globalkeys = gears.table.join(
                         bottom = 0,
                         right  = 0
                     })
+
                     -- Autohide with delay
-                    gears.timer {
+                    local dock_timer = gears.timer {
                         timeout     = 10,
                         autostart   = true,
                         single_shot = true,
                         callback    = function() s.mywibox.visible = false end
                     }
+                    -- Prevent autohide when mouse is over the bar
+                    s.mywibox:connect_signal("mouse::enter", function()
+                        if dock_timer.started then
+                            dock_timer:stop()
+                        end
+                    end)
+                    s.mywibox:connect_signal("mouse::leave", function()
+                        dock_timer:again()
+                    end)
                 end
             end)
         end,
