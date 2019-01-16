@@ -266,37 +266,36 @@ globalkeys = gears.table.join(
     -- Custom status bar
     awful.key({ modkey,           }, "b",
         function ()
-            awful.screen.connect_for_each_screen(function(s)
-                if s.mywibox.visible then
-                    s.mywibox.visible = false
-                else
-                    s.mywibox.visible = true
-                    -- Remove struts (enable overlap)
-                    s.mywibox:struts({
-                        left   = 0,
-                        top    = 0,
-                        bottom = 0,
-                        right  = 0
-                    })
+            local s = awful.screen.focused()
+            if s.mywibox.visible then
+                s.mywibox.visible = false
+            else
+                s.mywibox.visible = true
+                -- Remove struts (enable overlap)
+                s.mywibox:struts({
+                    left   = 0,
+                    top    = 0,
+                    bottom = 0,
+                    right  = 0
+                })
 
-                    -- Autohide with delay
-                    local dock_timer = gears.timer {
-                        timeout     = 10,
-                        autostart   = true,
-                        single_shot = true,
-                        callback    = function() s.mywibox.visible = false end
-                    }
-                    -- Prevent autohide when mouse is over the bar
-                    s.mywibox:connect_signal("mouse::enter", function()
-                        if dock_timer.started then
-                            dock_timer:stop()
-                        end
-                    end)
-                    s.mywibox:connect_signal("mouse::leave", function()
-                        dock_timer:again()
-                    end)
-                end
-            end)
+                -- Autohide with delay
+                local dock_timer = gears.timer {
+                    timeout     = 10,
+                    autostart   = true,
+                    single_shot = true,
+                    callback    = function() s.mywibox.visible = false end
+                }
+                -- Prevent autohide when mouse is over the bar
+                s.mywibox:connect_signal("mouse::enter", function()
+                    if dock_timer.started then
+                        dock_timer:stop()
+                    end
+                end)
+                s.mywibox:connect_signal("mouse::leave", function()
+                    dock_timer:again()
+                end)
+            end
         end,
         {description = "toggle status bar", group = "awesome"}),
 
