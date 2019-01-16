@@ -278,6 +278,13 @@ globalkeys = gears.table.join(
                         bottom = 0,
                         right  = 0
                     })
+                    -- Autohide with delay
+                    gears.timer {
+                        timeout     = 10,
+                        autostart   = true,
+                        single_shot = true,
+                        callback    = function() s.mywibox.visible = false end
+                    }
                 end
             end)
         end,
