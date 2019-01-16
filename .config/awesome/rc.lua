@@ -573,6 +573,22 @@ client.connect_signal("request::titlebars", function(c)
         },
         layout = wibox.layout.align.horizontal
     }
+
+    -- Hide the menubar if we are not floating
+    if not awful.layout.get(c.screen).name == "floating" then
+        awful.titlebar.hide(c)
+    end
+end)
+
+-- Toggle titlebar by layout type
+awful.tag.attached_connect_signal(s, "property::layout", function (t)
+    for _,c in pairs(t:clients()) do
+        if t.layout.name == "floating" then
+            awful.titlebar.show(c)
+        else
+            awful.titlebar.hide(c)
+        end
+    end
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
