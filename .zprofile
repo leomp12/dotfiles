@@ -8,7 +8,7 @@
 export EDITOR=nano
 
 # add custom bin paths
-export PATH="$PATH:$HOME/bin:$HOME/.npm-packages/bin"
+export PATH="$PATH:$HOME/.bin:$HOME/.npm-packages/bin"
 
 # scale GUI toolkits
 # https://wiki.archlinux.org/index.php/HiDPI
