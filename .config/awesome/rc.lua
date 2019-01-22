@@ -531,9 +531,15 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = false }
     },
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
+    -- Set some apps to always map on specific tags on screen 1.
+    { rule = { class = "Firefox" },
+      properties = { screen = 1, tag = "2" } },
+    { rule = { class = "Atom" },
+      properties = { screen = 1, tag = "3" } },
+    { rule = { class = "Slack" },
+      properties = { screen = 1, tag = "4" } },
+    { rule = { class = "Postman" },
+      properties = { screen = 1, tag = "5" } },
 }
 -- }}}
 
