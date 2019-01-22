@@ -535,7 +535,7 @@ awful.rules.rules = {
     { rule = { class = "Firefox" },
       properties = { screen = 1, tag = "2" } },
     { rule = { class = "Atom" },
-      properties = { screen = 1, tag = "3" } },
+      properties = { screen = 1, tag = "3", maximized = true } },
     { rule = { class = "Slack" },
       properties = { screen = 1, tag = "4" } },
     { rule = { class = "Postman" },
