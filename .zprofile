@@ -13,7 +13,7 @@ export PATH="$PATH:$HOME/.bin:$HOME/.npm-packages/bin"
 # scale GUI toolkits
 # https://wiki.archlinux.org/index.php/HiDPI
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
-export QT_FONT_DPI=168
+export QT_FONT_DPI=144 vym
 export GDK_DPI_SCALE=1.5
 
 # set Qt5 theme
