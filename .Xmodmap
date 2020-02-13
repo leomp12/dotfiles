@@ -1,0 +1,5 @@
+clear shift
+clear mod4
+keycode 62 = Super_R
+add shift = Shift_L Shift_R
+add mod4 = Super_R Super_L Hyper_L

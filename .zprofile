@@ -17,3 +17,6 @@ export GDK_DPI_SCALE=1.5
 
 # set Qt5 theme
 export QT_STYLE_OVERRIDE=Breeze
+
+# custom mod keys
+xmodmap ~/.Xmodmap
