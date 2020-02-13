@@ -1,5 +1,7 @@
-clear shift
 clear mod4
-keycode 62 = Super_R
-add shift = Shift_L Shift_R
-add mod4 = Super_R Super_L Hyper_L
+clear shift
+clear lock
+keycode 62 = Super_R Shift_R NoSymbol NoSymbol
+keycode 66 = Super_L Caps_Lock NoSymbol NoSymbol
+add mod4 = Super_R Super_L Caps_Lock Hyper_L
+add shift = Shift_L
