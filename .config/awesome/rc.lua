@@ -61,8 +61,8 @@ awful.util.spawn("compton -b")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
+    awful.layout.suit.floating,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
@@ -266,7 +266,7 @@ globalkeys = gears.table.join(
     --]]
 
     -- Custom status bar
-    awful.key({ modkey,           }, "b",
+    awful.key({ modkey,           }, "'",
         function ()
             local s = awful.screen.focused()
             if s.mywibox.visible then
@@ -374,7 +374,7 @@ globalkeys = gears.table.join(
     ]]--
 
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
+    awful.key({ modkey }, "/", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
 )
 
@@ -532,8 +532,8 @@ awful.rules.rules = {
     },
 
     -- Set some apps to always map on specific tags on screen 1.
-    { rule = { class = "Firefox" },
-      properties = { screen = 1, tag = "2" } },
+    { rule = { instance = "Navigator" },
+      properties = { screen = 1, tag = "2", floating = true } },
     { rule = { class = "Atom" },
       properties = { screen = 1, tag = "3", maximized = true } },
     { rule = { class = "Slack" },
