@@ -266,7 +266,7 @@ globalkeys = gears.table.join(
     --]]
 
     -- Custom status bar
-    awful.key({ modkey,           }, "'",
+    awful.key({ modkey,           }, "q",
         function ()
             local s = awful.screen.focused()
             if s.mywibox.visible then
@@ -374,7 +374,7 @@ globalkeys = gears.table.join(
     ]]--
 
     -- Menubar
-    awful.key({ modkey }, "/", function() menubar.show() end,
+    awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
 )
 
