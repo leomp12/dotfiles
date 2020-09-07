@@ -1,5 +1,6 @@
 remove Control = Control_R
-keycode 61 = Super_R
-keycode 97 = slash question slash question
+keycode 108 = Mode_switch
+keycode 61 = dead_acute dead_tilde dead_circumflex dead_grave
+keycode 97 = slash question ccedilla questiondown
 clear Mod4
 add Mod4 = Super_R Super_L Control_R Hyper_L
