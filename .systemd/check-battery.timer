@@ -1,0 +1,11 @@
+[Unit]
+Description=Check battery capacity and status each 5 minutes
+Requires=check-battery.service
+
+[Timer]
+Unit=check-battery.service
+OnBootSec=3min
+OnUnitActiveSec=5min
+
+[Install]
+WantedBy=timers.target

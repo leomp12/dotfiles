@@ -1,0 +1,13 @@
+[Unit]
+Description=Hard check battery capacity to prevent over discharge
+Wants=check-battery.timer
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /opt/bin/check-battery.sh 11
+SyslogIdentifier=check-battery
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
