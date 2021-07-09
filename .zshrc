@@ -7,6 +7,9 @@
 unset MANPATH # delete if already modifying MANPATH elsewhere
 export MANPATH="$HOME/.npm-packages/share/man:$(manpath)"
 
+# load NVM
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh
+
 # many tweaks and advanced optimizations from grml with grml-zsh-config pkg
 # same as Arch ISO
 
