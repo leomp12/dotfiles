@@ -1,4 +1,0 @@
-echo '-- WIFI --';
-iw dev wlp1s0 link
-echo '-- WIRED --';
-ip a s enp0s31f6
