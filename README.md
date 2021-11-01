@@ -8,6 +8,9 @@ My minimal Linux (Ubuntu on WSL1) JS development setup :ok_hand:
 # pwd = /mnt/c/Users/{me}
 $ mkdir ~/.ssh
 $ cp .ssh/id_* ~/.ssh/
+$ cp .npmrc ~/
+$ ln -s ./ ~/desktop
+$ ln -s ./Code ~/code
 $ cd ~
 $ eval "$(ssh-agent -s)"
 $ ssh-add
