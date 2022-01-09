@@ -12,3 +12,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # US intl custom mod keys
 xmodmap ~/.Xmodmap-us
+
+# Shortcut custom bin scripts
+export PATH="$PATH:$HOME/.bin"
