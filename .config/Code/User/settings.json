@@ -1,0 +1,10 @@
+{
+    "workbench.colorTheme": "Default Dark+",
+    "editor.inlineSuggest.enabled": true,
+    "editor.tabSize": 2,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
+    "editor.fontLigatures": true,
+    "terminal.integrated.fontFamily": "'monospace', monospace"
+}
