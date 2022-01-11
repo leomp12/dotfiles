@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if (setxkbmap -query | grep -q "layout:\s\+us")
+then
+  setxkbmap -layout br -model abnt2 -variant abnt2
+  xmodmap ~/.Xmodmap-br
+else
+  setxkbmap -layout us -model pc101
+  xmodmap ~/.Xmodmap-us
+fi
