@@ -1,3 +1,0 @@
-'body':
-  'ctrl-alt-n': 'application:reopen-project'
-  'ctrl-alt-s': 'sftp-deployment:uploadCurrentFile'
