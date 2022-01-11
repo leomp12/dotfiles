@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "-- Removing unused packages (orphans)";
 sudo pacman -Rns $(pacman -Qtdq);
 echo "-- Cleaning the package cache";
