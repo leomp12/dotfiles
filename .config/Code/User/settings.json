@@ -6,5 +6,6 @@
     "files.insertFinalNewline": true,
     "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
     "editor.fontLigatures": true,
-    "terminal.integrated.fontFamily": "'monospace', monospace"
+    "terminal.integrated.fontFamily": "'monospace', monospace",
+    "workbench.panel.defaultLocation": "right"
 }
