@@ -62,8 +62,8 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.tile,
     awful.layout.suit.floating,
+    awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
@@ -178,7 +178,9 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1" }, s, awful.layout.suit.tile)
+    awful.tag({ "2", "3", "4", "5" }, s, awful.layout.layouts[1])
+    awful.tag({ "6" }, s, awful.layout.suit.spiral)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
