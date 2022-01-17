@@ -525,9 +525,9 @@ awful.rules.rules = {
 
     -- Set some apps rules and tags on screen 1
     { rule = { instance = "Navigator" },
-      properties = { screen = 1, tag = "2", floating = true } },
+      properties = { screen = 1, tag = "2" } },
     { rule = { class = "Code" },
-      properties = { screen = 1, tag = "3", maximized = true } },
+      properties = { screen = 1, tag = "3" } },
     { rule = { class = "Slack" },
       properties = { screen = 1, floating = true } },
 }
