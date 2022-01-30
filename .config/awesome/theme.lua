@@ -21,10 +21,10 @@ theme.bg_urgent     = theme.bg_focus
 theme.bg_minimize   = theme.bg_normal
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#bcbcbc"
-theme.fg_focus      = "#f3f6f4"
+theme.fg_normal     = "#d3dae3"
+theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#5294e2"
-theme.fg_minimize   = "#999999"
+theme.fg_minimize   = "#929ca7"
 
 theme.useless_gap   = dpi(1)
 theme.border_width  = dpi(0)
@@ -43,7 +43,8 @@ theme.border_marked = theme.bg_urgent
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 theme.tasklist_bg_focus = theme.bg_normal
-theme.tasklist_fg_focus = "#ffffff"
+theme.tasklist_fg_normal = theme.fg_minimize
+theme.tasklist_fg_minimize = "#1b1e27"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
