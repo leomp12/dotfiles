@@ -15,22 +15,22 @@ local theme = {}
 
 theme.font          = "FiraCode Nerd Font Mono 9"
 
-theme.bg_normal     = "#222222"
-theme.bg_focus      = "#535d6c"
-theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
+theme.bg_normal     = "#4b5162"
+theme.bg_focus      = "#383c4a"
+theme.bg_urgent     = theme.bg_normal
+theme.bg_minimize   = theme.bg_normal
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#aaaaaa"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_normal     = "#bcbcbc"
+theme.fg_focus      = "#f3f6f4"
+theme.fg_urgent     = "#5294e2"
+theme.fg_minimize   = "#999999"
 
 theme.useless_gap   = dpi(1)
 theme.border_width  = dpi(0)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
-theme.border_marked = "#91231c"
+theme.border_normal = theme.bg_normal
+theme.border_focus  = theme.bg_focus
+theme.border_marked = theme.bg_urgent
 
 -- There are other variable sets
 -- overriding the default one when
@@ -121,7 +121,7 @@ theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_focus, theme.fg_focus
+    theme.menu_height, theme.bg_urgent, theme.fg_urgent
 )
 
 -- Define the icon theme for application icons. If not set then the icons
