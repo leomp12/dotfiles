@@ -17,7 +17,7 @@ theme.font          = "FiraCode Nerd Font Mono 9"
 
 theme.bg_normal     = "#4b5162"
 theme.bg_focus      = "#383c4a"
-theme.bg_urgent     = theme.bg_normal
+theme.bg_urgent     = theme.bg_focus
 theme.bg_minimize   = theme.bg_normal
 theme.bg_systray    = theme.bg_normal
 
@@ -42,8 +42,8 @@ theme.border_marked = theme.bg_urgent
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
--- Example:
---theme.taglist_bg_focus = "#ff0000"
+theme.tasklist_bg_focus = theme.bg_normal
+theme.tasklist_fg_focus = "#ffffff"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
@@ -121,7 +121,7 @@ theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_urgent, theme.fg_urgent
+    theme.menu_height, theme.bg_normal, theme.fg_urgent
 )
 
 -- Define the icon theme for application icons. If not set then the icons
