@@ -1,5 +1,4 @@
 {
-    "workbench.colorTheme": "Arc Dark Theme",
     "editor.inlineSuggest.enabled": true,
     "editor.tabSize": 2,
     "files.eol": "\n",
@@ -7,5 +6,6 @@
     "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
     "editor.fontLigatures": true,
     "terminal.integrated.fontFamily": "'monospace', monospace",
-    "workbench.panel.defaultLocation": "right"
+    "workbench.panel.defaultLocation": "right",
+    "workbench.colorTheme": "One Dark Pro Darker"
 }
