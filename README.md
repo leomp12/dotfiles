@@ -2,4 +2,115 @@
 
 My minimal Linux (Arch) productivity setup :ok_hand:
 
+## Packages list
+
+```bash
+$ pacman -Qet
+adobe-source-sans-fonts 3.046-1
+alacritty 0.10.0-2
+alsa-utils 1.2.6-1
+atool 0.39.0-7
+autoconf 2.71-1
+automake 1.16.5-1
+awesome 4.3-3
+baobab 41.0-1
+bison 3.8.2-1
+bluez-utils 5.63-1
+chromium 97.0.4692.99-2
+composer 2.2.5-1
+ctags 1:5.9.20210905.0-1
+drafter 4.0.2-1
+eog 41.1-2
+evince 41.3-1
+ffmpeg-compat-54 1.2.12-3
+firefox 96.0.3-1
+flex 2.6.4-3
+font-bh-ttf 1.0.3-7
+grml-zsh-config 0.19.1-1
+grub 2:2.06-4
+inetutils 2.2-1
+inotify-tools 3.22.1.0-1
+intel-ucode 20210608-1
+inter-font 3.19-1
+iputils 20211215-1
+jfsutils 1.1.15-7
+jq 1.6-4
+l3afpad 0.8.18.1.11-5
+libreoffice-fresh 7.2.5-4
+libva-utils 2.13.0-1
+licenses 20220125-1
+linux 5.16.3.arch1-1
+logrotate 3.19.0-1
+make 4.3-3
+man-db 2.9.4-2
+man-pages 5.13-1
+nano 6.0-1
+nautilus 41.2-1
+neofetch 7.1.0-2
+nerd-fonts-fira-code 2.1.0-2
+netctl 1.27-1
+openresty 1.19.9.1-1
+pacman-contrib 1.4.0-4
+patch 2.7.6-8
+pavucontrol 1:5.0-1
+picom 8.2-1
+pkgconf 1.8.0-1
+pkgstats 3.2.0-1
+preloader-signed 20130208-1
+python-pyalsa 1.2.6-2
+python2-pyalsa 1.1.6-4
+rclone 1.57.0-2
+slack-desktop 4.23.0-1
+slock 1.4-5
+solaar 1.1.1-1
+sshfs 3.7.2-2
+syslinux 6.04.pre2.r11.gbf6db5b4-3
+tlp 1.5.0-4
+totem 3.38.2-1
+trash-cli 0.21.10.24-2
+tree 2.0.1-2
+ttf-fira-mono 2:3.206-4
+ttf-fira-sans 1:4.301-2
+ttf-inconsolata 1:3.000-3
+ttf-jetbrains-mono 2.242-1
+ttf-opensans 1.101-2
+ttf-roboto 2.138-4
+unclutter 1:1.6-1
+vi 1:070224-5
+visual-studio-code-bin 1.63.2-1
+wget 1.21.2-1
+wpa_actiond 1.4-3
+x86_energy_perf_policy 5.16-1
+xclip 0.13-3
+xf86-video-intel 1:2.99.917+916+g31486f40-2
+xorg-bdftopcf 1.1-2
+xorg-iceauth 1.0.8-2
+xorg-mkfontscale 1.2.1-2
+xorg-server 21.1.3-1
+xorg-sessreg 1.1.2-2
+xorg-smproxy 1.0.6-3
+xorg-x11perf 1.6.1-2
+xorg-xbacklight 1.2.3-2
+xorg-xcmsdb 1.0.5-3
+xorg-xcursorgen 1.0.7-2
+xorg-xdriinfo 1.0.6-2
+xorg-xev 1.2.4-1
+xorg-xgamma 1.0.6-3
+xorg-xhost 1.0.8-2
+xorg-xinit 1.4.1-3
+xorg-xinput 1.6.3-2
+xorg-xkbevd 1.1.4-3
+xorg-xkbutils 1.0.4-4
+xorg-xkill 1.0.5-2
+xorg-xlsatoms 1.1.3-2
+xorg-xlsclients 1.1.4-2
+xorg-xpr 1.0.5-2
+xorg-xrefresh 1.0.6-2
+xorg-xsetroot 1.1.2-2
+xorg-xvinfo 1.1.4-2
+xorg-xwd 1.0.8-1
+xorg-xwud 1.0.5-2
+zenity 3.41.0-1
+```
+
 ### WIP :hammer:
