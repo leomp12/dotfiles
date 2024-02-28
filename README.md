@@ -58,6 +58,7 @@ nano 7.2-1
 nautilus 45.2.1-1
 neofetch 7.1.0-2
 netctl 1.29-1
+obs-studio 30.0.2-4
 openresty 1.25.3.1-1
 openssl-1.1 1.1.1.w-1
 otf-urbanist 1.321-1
@@ -101,6 +102,7 @@ unclutter 1:1.6-3
 vi 1:070224-6
 visual-studio-code-bin 1.86.2-1
 visual-studio-code-bin-debug 1.86.2-1
+vlc 3.0.20-7
 wget 1.21.4-1
 wpa_actiond 1.4-3
 x86_energy_perf_policy 6.7-1
