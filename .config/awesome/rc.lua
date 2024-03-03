@@ -599,3 +599,10 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart
 awful.spawn.with_shell("picom --experimental-backends")
+awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+local screen = awful.screen.focused()
+local tag = screen.tags[1]
+if tag then
+   tag:view_only()
+end
+awful.spawn(terminal)

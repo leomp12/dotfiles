@@ -17,7 +17,3 @@ xmodmap ~/.Xmodmap-us
 
 # Start window manager
 exec awesome
-
-# Check HDMI and setup
-sleep 1
-(xrandr | grep 'HDMI-1 connected') && hdmi-on wide && switch-keyboard
