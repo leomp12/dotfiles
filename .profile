@@ -4,7 +4,7 @@ fi
 
 export EDITOR=nano
 
-# shortcut custom bin scripts
+# Shortcut custom bin scripts
 export PATH="$PATH:$HOME/.bin"
 
 # pnpm
@@ -20,6 +20,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/home/leo/.bun/_bun" ] && source "/home/leo/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
-# fuzzy finder with ctrl+i or ctrl+t
-source <(fzf --zsh)
