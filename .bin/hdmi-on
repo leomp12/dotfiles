@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if [ $1 = 'wide' ]; then
-  xrandr --output HDMI-1 --mode 2560x1080 --primary || exit 1
-else
-  xrandr --output HDMI-1 --auto --primary || exit 1
-fi
-xrandr --output eDP-1 --off

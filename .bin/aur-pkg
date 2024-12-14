@@ -2,4 +2,4 @@
 
 git clone https://aur.archlinux.org/$1.git ~/.aur/$1
 cd ~/.aur/$1
-less PKGBUILD
+less PKGBUILD && makepkg -sirc

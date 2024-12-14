@@ -1,3 +1,0 @@
-#!/bin/bash
-
-sudo systemctl restart netctl-auto@wlp1s0.service
