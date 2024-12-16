@@ -3,13 +3,6 @@ export EDITOR=nano
 # Shortcut custom executables
 export PATH="$PATH:$HOME/.bin"
 
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-  ssh-agent -t 2h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-fi
-if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
-  source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-fi
-
 bindkey "^[[3~" delete-char
 
 export NVM_DIR="$HOME/.nvm"
@@ -22,3 +15,13 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+  ssh-agent -t 2h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
+  source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
+if ! ssh-add -l &>/dev/null; then
+  ssh-add 2>/dev/null
+fi
