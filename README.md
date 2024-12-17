@@ -7,15 +7,25 @@ Based on https://github.com/yuk7/ArchWSL
 ## Packages list
 
 ```bash
-$ pacman -Qet
+$ pacman -Qe
 arch-install-scripts 29-1
 base 3-2
+base-devel 1-2
+fakeroot-tcp 1.34-1
+fzf 0.56.3-1
+git 2.47.1-1
 httpie 3.2.3-1
 jq 1.7.1-2
+less 1:668-1
 nano 8.2-1
 neofetch 7.1.0-2
+openssh 9.9p1-2
+sudo 1.9.16.p2-1
+tree 2.1.3-1
+vim 9.1.0866-1
 wget 1.25.0-1
 zoxide 0.9.6-1
+zsh 5.9-5
 zsh-autosuggestions 0.7.1-1
 zsh-syntax-highlighting 0.8.0-1
 ```
