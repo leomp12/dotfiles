@@ -20,6 +20,13 @@ zsh-autosuggestions 0.7.1-1
 zsh-syntax-highlighting 0.8.0-1
 ```
 
+## .wslconfig
+
+```conf
+[wsl2]
+memory=6700MB
+```
+
 ## Weekly backups
 
 ```console
