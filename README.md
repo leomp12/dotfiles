@@ -34,7 +34,7 @@ zsh-syntax-highlighting 0.8.0-1
 
 ```conf
 [wsl2]
-memory=6700MB
+memory=6900MB
 ```
 
 ## Weekly backups
