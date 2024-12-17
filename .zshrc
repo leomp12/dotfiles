@@ -24,3 +24,6 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # Fuzzy finder with ctrl+r, ctrl+t, ctrl+i
 source <(fzf --zsh)
+
+# `z` for better `cd` with autojump
+eval "$(zoxide init zsh)"
