@@ -30,6 +30,17 @@ zsh-autosuggestions 0.7.1-1
 zsh-syntax-highlighting 0.8.0-1
 ```
 
+## Systemd services
+
+```conf
+# /etc/systemd/system/tmp.mount.d/override.conf
+[Mount]
+What=/mnt/c/tmp
+Where=/tmp
+Type=none
+Options=bind
+```
+
 ## .wslconfig
 
 ```conf
