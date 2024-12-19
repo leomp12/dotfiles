@@ -17,9 +17,12 @@ git 2.47.1-1
 httpie 3.2.3-1
 jq 1.7.1-2
 less 1:668-1
+level-zero-loader 1.18.5-1
 nano 8.2-1
+ncdu 2.7-1
 neofetch 7.1.0-2
 openssh 9.9p1-2
+pacman-contrib 1.10.6-2
 sudo 1.9.16.p2-1
 tree 2.1.3-1
 vim 9.1.0866-1
