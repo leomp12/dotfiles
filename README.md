@@ -55,5 +55,6 @@ memory=6900MB
 
 ```console
 # PowerShell as Administrator
+wsl --shutdown
 wsl --export Arch C:\Backups\Arch.tar
 ```
