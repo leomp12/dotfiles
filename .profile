@@ -15,6 +15,8 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+# Skip warnings with pnpm-specific fields on .npmrc
+export npm_config_loglevel=error
 
 if ! pgrep -u "$USER" ssh-agent > /dev/null; then
   ssh-agent -t 6h > "$XDG_RUNTIME_DIR/ssh-agent.env"
