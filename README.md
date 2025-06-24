@@ -49,9 +49,6 @@ Options=bind
 ```conf
 [wsl2]
 memory=6900MB
-
-[experimental]
-autoMemoryReclaim=gradual
 ```
 
 ## Weekly backups
