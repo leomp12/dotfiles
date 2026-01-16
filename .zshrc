@@ -27,3 +27,21 @@ source <(fzf --zsh)
 
 # `z` for better `cd` with autojump
 eval "$(zoxide init zsh)"
+
+# bun completions
+[ -s "/home/leo/.bun/_bun" ] && source "/home/leo/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Multiple Claude Code accounts/config with .clauderc
+claude() {
+  local config_file=".clauderc"
+  if [[ -f "$PWD/$config_file" ]]; then
+    local cmd=$(cat "$PWD/$config_file" | tr -d '[:space:]')
+    eval "$cmd" "$@"
+  else
+    command claude "$@"
+  fi
+}
