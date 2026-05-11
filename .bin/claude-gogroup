@@ -1,0 +1,3 @@
+#!/bin/bash
+
+CLAUDE_CONFIG_DIR=~/.claude/accounts/gogroup claude "$@"
