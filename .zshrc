@@ -45,3 +45,5 @@ claude() {
     command claude "$@"
   fi
 }
+
+export PATH="$HOME/.local/bin:$PATH"
