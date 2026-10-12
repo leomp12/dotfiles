@@ -3,12 +3,15 @@ export EDITOR=nano
 # Shortcut custom executables
 export PATH="$PATH:$HOME/.bin"
 
+# Claude Code: conta padrão (ecom aposentada em 2026-10)
+export CLAUDE_CONFIG_DIR="$HOME/.claude/accounts/gogroup"
+
 bindkey "^[[3~" delete-char
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-[ -f .nvmrc ] && nvm use
+[ -f .nvmrc ] && command -v nvm >/dev/null && nvm use
 
 export PNPM_HOME="/home/leo/.local/share/pnpm"
 case ":$PATH:" in

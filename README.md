@@ -1,60 +1,24 @@
 # dotfiles
 
-My minimal Linux (Arch on WSL2) development setup
+Branch `arch`: Arch Linux + Hyprland no `leo-arch-dev`, organizado em pacotes de [GNU Stow](https://www.gnu.org/software/stow/).
+Branch `wsl2`: Arch no WSL2 (layout plano, sem stow).
 
-Based on https://github.com/yuk7/ArchWSL
-
-## Packages list
+## Uso
 
 ```bash
-$ pacman -Qe
-arch-install-scripts 29-1
-base 3-2
-base-devel 1-2
-fakeroot-tcp 1.34-1
-fzf 0.56.3-1
-git 2.47.1-1
-httpie 3.2.3-1
-jq 1.7.1-2
-less 1:668-1
-level-zero-loader 1.18.5-1
-nano 8.2-1
-ncdu 2.7-1
-neofetch 7.1.0-2
-openssh 9.9p1-2
-pacman-contrib 1.10.6-2
-sudo 1.9.16.p2-1
-tree 2.1.3-1
-vim 9.1.0866-1
-wget 1.25.0-1
-zoxide 0.9.6-1
-zsh 5.9-5
-zsh-autosuggestions 0.7.1-1
-zsh-syntax-highlighting 0.8.0-1
+git clone -b arch git@github.com:leomp12/dotfiles.git ~/code/leomp12/dotfiles
+cd ~/code/leomp12/dotfiles
+stow -t ~ zsh bin kitty hypr      # cria os symlinks no $HOME
+stow -t ~ claude                  # CLAUDE.md global (CLAUDE_CONFIG_DIR=~/.claude/accounts/gogroup)
+stow -D -t ~ kitty                # desfaz um pacote
 ```
 
-## Systemd services
+| Pacote | Conteúdo |
+|---|---|
+| `zsh` | `.zshrc`, `.profile`, `.p10k.zsh` (p10k via clone em `~/powerlevel10k`) |
+| `bin` | `.bin/`: `aur-pkg`, `clear-pacman`, `claude-gogroup` |
+| `kitty` | `.config/kitty/kitty.conf` |
+| `hypr` | `.config/hypr/hyprland.lua` (SUPER+A abre o kitty com o Claude) |
+| `claude` | `.claude/accounts/gogroup/CLAUDE.md` |
 
-```conf
-# /etc/systemd/system/tmp.mount.d/override.conf
-[Mount]
-What=/mnt/c/tmp
-Where=/tmp
-Type=none
-Options=bind
-```
-
-## .wslconfig
-
-```conf
-[wsl2]
-memory=6900MB
-```
-
-## Weekly backups
-
-```console
-# PowerShell as Administrator
-wsl --shutdown
-wsl --export Arch C:\Backups\Arch.tar
-```
+Dependências (pacman): `zsh zsh-autosuggestions zsh-syntax-highlighting zsh-completions fzf zoxide stow kitty ttf-jetbrains-mono-nerd`.

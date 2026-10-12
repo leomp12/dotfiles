@@ -14,7 +14,8 @@ compinit
 
 source ~/.profile
 
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+# powerlevel10k: clone manual (git clone --depth=1 https://github.com/romkatv/powerlevel10k ~/powerlevel10k)
+[[ -f ~/powerlevel10k/powerlevel10k.zsh-theme ]] && source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
