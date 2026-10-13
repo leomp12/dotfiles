@@ -1,0 +1,34 @@
+# dunst — notificações. Atalhos no hyprland.lua: SUPER+, fecha, SUPER+SHIFT+, histórico.
+[global]
+font = JetBrainsMono Nerd Font 11
+origin = top-right
+offset = (12, 40)
+width = 360
+corner_radius = 8
+frame_width = 2
+frame_color = "#89b4fa"
+separator_color = frame
+gap_size = 6
+padding = 10
+horizontal_padding = 12
+icon_position = left
+max_icon_size = 48
+history_length = 30
+mouse_left_click = do_action, close_current
+mouse_right_click = close_all
+
+[urgency_low]
+background = "#1e1e2e"
+foreground = "#a6adc8"
+timeout = 4
+
+[urgency_normal]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+timeout = 6
+
+[urgency_critical]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+frame_color = "#f38ba8"
+timeout = 0

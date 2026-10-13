@@ -1,0 +1,18 @@
+/* waybar — tema escuro simples, mesma paleta do fuzzel e do dunst */
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+window#waybar { background: #1e1e2e; color: #cdd6f4; }
+#workspaces button { padding: 0 8px; color: #6c7086; }
+#workspaces button.active { color: #1e1e2e; background: #89b4fa; }
+#workspaces button.urgent { color: #1e1e2e; background: #f38ba8; }
+#workspaces button:hover { background: #313244; box-shadow: none; }
+#window { padding: 0 10px; color: #a6adc8; }
+#clock { font-weight: bold; }
+#mpris, #tray, #bluetooth, #network, #pulseaudio, #cpu, #memory { padding: 0 8px; }
+#pulseaudio.muted, #network.disconnected, #bluetooth.disabled { color: #6c7086; }
+tooltip { background: #1e1e2e; border: 1px solid #45475a; }
