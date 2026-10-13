@@ -1,27 +1,32 @@
 #!/bin/bash
-# Carrega a chave no ssh-agent do systemd (sem expiração). Sem TTY (ex.: Bash do
-# Claude Code), abre um kitty na tela do Hyprland para digitar a passphrase lá.
+# Carrega a chave no ssh-agent do systemd, sem expiração (até o reboot).
+#   ssh -t leo-arch-dev .bin/ssh-unlock   carrega de longe (WSL/Termux), pede a passphrase ali
+#   ssh-unlock [-r]                       sem TTY (Bash do Claude Code): abre um kitty na tela
+#                                         do Hyprland; -r recarrega mesmo se a chave já estiver carregada
+LIFETIME=${SSH_KEY_LIFETIME:-}  # vazio = sem expiração (até o reboot)
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/ssh-agent.socket"
 
-if ssh-add -l &>/dev/null; then
-  echo "ok: chave já carregada"; ssh-add -l; exit 0
-fi
+# Com TTY sempre (re)adiciona a chave
 if [[ -t 0 ]]; then
-  exec ssh-add
+  exec ssh-add ${LIFETIME:+-t "$LIFETIME"}
+fi
+if [[ $1 != -r ]] && ssh-add -l &>/dev/null; then
+  echo "ok: chave já carregada (use -r para renovar)"; exit 0
 fi
 
 his=$(ls -t "$XDG_RUNTIME_DIR/hypr" 2>/dev/null | head -1)
 if [[ -z $his ]] || ! HYPRLAND_INSTANCE_SIGNATURE=$his hyprctl -j monitors &>/dev/null; then
-  echo "sem TTY e sem Hyprland: conecte por SSH (WSL/Termux) e rode 'ssh-add'" >&2
+  echo "sem TTY e sem Hyprland: rode 'ssh -t leo-arch-dev .bin/ssh-unlock' no WSL/Termux" >&2
   exit 1
 fi
 # config do Hyprland em Lua: dispatch recebe uma expressão hl.dsp.*
 HYPRLAND_INSTANCE_SIGNATURE=$his hyprctl dispatch \
-  "hl.dsp.exec_cmd(\"kitty --class ssh-unlock -e env SSH_AUTH_SOCK=$SSH_AUTH_SOCK ssh-add\")" >/dev/null
+  "hl.dsp.exec_cmd(\"kitty --class ssh-unlock -e env SSH_AUTH_SOCK=$SSH_AUTH_SOCK ssh-add ${LIFETIME:+-t $LIFETIME}\")" >/dev/null
 echo "abri um kitty na tela do PC: digite a passphrase lá"
 for _ in $(seq 50); do
   sleep 2
-  if ssh-add -l &>/dev/null; then echo "ok: chave carregada"; exit 0; fi
+  pid=$(pgrep -f "kitty --class ssh-unlock" | head -1)
+  if [[ -z $pid ]] && ssh-add -l &>/dev/null; then echo "ok: chave carregada"; exit 0; fi
 done
-echo "tempo esgotado; rode /ssh-unlock de novo" >&2
+echo "tempo esgotado; rode de novo" >&2
 exit 1

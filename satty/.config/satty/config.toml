@@ -6,7 +6,7 @@ save-after-copy = true
 initial-tool = "crop"
 actions-on-enter = ["save-to-clipboard"]
 actions-on-escape = ["exit"]
-output-filename = "~/Pictures/Screenshots/%Y-%m-%d_%H-%M-%S.png"
+output-filename = "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
 [font]
 family = "JetBrainsMono Nerd Font"

@@ -6,7 +6,7 @@
 set -euo pipefail
 export PATH="$HOME/.local/bin:$PATH"
 mode="${1:-region}"
-dir="$HOME/Pictures/Screenshots"; mkdir -p "$dir"
+dir="$HOME/pictures/screenshots"; mkdir -p "$dir"
 file="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
 
 case "$mode" in
