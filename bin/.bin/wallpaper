@@ -1,0 +1,30 @@
+#!/bin/bash
+# Troca o wallpaper do hyprpaper e lembra a escolha (symlink ~/.cache/wallpaper).
+#   wallpaper            próximo da pasta
+#   wallpaper prev       anterior
+#   wallpaper random     aleatório
+#   wallpaper <arquivo>  um arquivo específico
+# Pasta: $WALLPAPER_DIR ou "$(xdg-user-dir PICTURES)/wallpapers/space"
+set -euo pipefail
+dir="${WALLPAPER_DIR:-$(xdg-user-dir PICTURES)/wallpapers/space}"
+link="$HOME/.cache/wallpaper"
+mapfile -t files < <(find "$dir" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) | sort)
+(( ${#files[@]} )) || { echo "nenhuma imagem em $dir" >&2; exit 1; }
+
+current="$(readlink -f "$link" 2>/dev/null || true)"
+idx=-1
+for i in "${!files[@]}"; do [[ "${files[$i]}" == "$current" ]] && idx=$i; done
+
+case "${1:-next}" in
+  next)   target="${files[$(( (idx + 1) % ${#files[@]} ))]}" ;;
+  prev)   target="${files[$(( (idx - 1 + ${#files[@]}) % ${#files[@]} ))]}" ;;
+  random) target="${files[$(( RANDOM % ${#files[@]} ))]}" ;;
+  *)      target="$(readlink -f "$1")" ;;
+esac
+
+mkdir -p "$(dirname "$link")"
+ln -sfn "$target" "$link"
+if pgrep -x hyprpaper >/dev/null; then
+  hyprctl hyprpaper wallpaper ",$target,cover" >/dev/null
+fi
+echo "$(basename "$target")"

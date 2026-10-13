@@ -57,6 +57,7 @@ local menu        = "fuzzel"
 
 hl.on("hyprland.start", function ()
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
+    hl.exec_cmd("hyprpaper")
     hl.exec_cmd("waybar")
     hl.exec_cmd("dunst")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
@@ -291,6 +292,8 @@ hl.bind("CTRL + Print",   hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot
 -- Clipboard, cor e notificações
 hl.bind(mainMod .. " + CTRL + V",     hl.dsp.exec_cmd("cliphist list | fuzzel --dmenu --prompt='clip ❯ ' | cliphist decode | wl-copy"))
 hl.bind(mainMod .. " + Print",        hl.dsp.exec_cmd("hyprpicker -a"))  -- conta-gotas, copia a cor
+hl.bind(mainMod .. " + CTRL + SPACE",         hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/wallpaper next"))  -- próximo wallpaper
+hl.bind(mainMod .. " + CTRL + SHIFT + SPACE", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/wallpaper prev"))
 hl.bind(mainMod .. " + comma",        hl.dsp.exec_cmd("dunstctl close"))
 hl.bind(mainMod .. " + SHIFT + comma", hl.dsp.exec_cmd("dunstctl history-pop"))
 local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
