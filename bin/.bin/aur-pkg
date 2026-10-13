@@ -1,5 +1,5 @@
 #!/bin/bash
 
-git clone https://aur.archlinux.org/$1.git ~/code/aur/$1
-cd ~/code/aur/$1
+git clone https://aur.archlinux.org/$1.git ~/code/_aur/$1
+cd ~/code/_aur/$1
 less PKGBUILD && makepkg -sirc
