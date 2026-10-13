@@ -64,7 +64,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("udiskie --automount --notify")
     hl.exec_cmd("hypridle") -- lock após 30 min sem input (hypridle.conf)
-    hl.exec_cmd(os.getenv("HOME") .. "/.bin/ssh-unlock") -- pede a passphrase num kitty se o agent estiver vazio (aparece ao desbloquear)
+    hl.exec_cmd(os.getenv("HOME") .. "/.bin/ssh-unlock </dev/null") -- pede a passphrase num kitty se o agent estiver vazio (aparece ao desbloquear); </dev/null: senão herda o tty1 e o ssh-add espera lá, invisível
 end)
 
 
