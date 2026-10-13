@@ -18,7 +18,7 @@ stow -D -t ~ kitty                # desfaz um pacote
 | `zsh` | `.zshrc`, `.profile`, `.p10k.zsh` (p10k via clone em `~/powerlevel10k`) |
 | `bin` | `.bin/`: `aur-pkg`, `clear-pacman`, `claude-gogroup`, `screenshot`, `wallpaper`, `ssh-unlock` (carrega a chave no ssh-agent do systemd), `unlock-screen` (destrava a tela remotamente via SSH) |
 | `kitty` | `.config/kitty/kitty.conf` |
-| `hypr` | `.config/hypr/hyprland.lua` + `hyprpaper.conf` + `hyprlock.conf` + `hypridle.conf` (SUPER+A abre o kitty com o Claude; SUPER+L trava a tela, que também trava após 10 min sem input; SUPER+CTRL+SPACE troca o wallpaper; Print / Shift+Print / Ctrl+Print = screenshot de região / janela / tela) |
+| `hypr` | `.config/hypr/hyprland.lua` + `hyprpaper.conf` + `hyprlock.conf` + `hypridle.conf` (SUPER+A abre o kitty com o Claude; SUPER+L trava a tela, que também trava após 30 min sem input; SUPER+CTRL+SPACE troca o wallpaper; Print / Shift+Print / Ctrl+Print = screenshot de região / janela / tela) |
 | `satty` | `.config/satty/config.toml` (editor de screenshot) |
 | `waybar` | barra; cliques abrem `bluetui`, `nmtui`, `wiremix` flutuando |
 | `fuzzel` | lançador (SUPER+R) e seletor do clipboard (SUPER+CTRL+V) |
