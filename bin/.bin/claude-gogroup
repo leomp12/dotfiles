@@ -1,3 +1,4 @@
 #!/bin/bash
-
-CLAUDE_CONFIG_DIR=~/.claude/accounts/gogroup claude "$@"
+# Funciona mesmo fora de um shell de login (ex.: keybind do Hyprland)
+export PATH="$HOME/.local/bin:$PATH"
+CLAUDE_CONFIG_DIR=~/.claude/accounts/gogroup exec claude "$@"
