@@ -64,6 +64,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("udiskie --automount --notify")
     hl.exec_cmd("hypridle") -- lock após 30 min sem input (hypridle.conf)
+    hl.exec_cmd(os.getenv("HOME") .. "/.bin/ssh-unlock") -- pede a passphrase num kitty se o agent estiver vazio (aparece ao desbloquear)
 end)
 
 
@@ -398,6 +399,15 @@ hl.window_rule({
     match  = { class = "^tui-float$" },
     float  = true,
     size   = "1000 650",
+    center = true,
+})
+
+-- kitty do ssh-unlock (passphrase da chave SSH) flutua centralizado
+hl.window_rule({
+    name   = "ssh-unlock-float",
+    match  = { class = "^ssh-unlock$" },
+    float  = true,
+    size   = "800 200",
     center = true,
 })
 
