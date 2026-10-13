@@ -19,7 +19,8 @@ case "${1:-next}" in
   next)   target="${files[$(( (idx + 1) % ${#files[@]} ))]}" ;;
   prev)   target="${files[$(( (idx - 1 + ${#files[@]}) % ${#files[@]} ))]}" ;;
   random) target="${files[$(( RANDOM % ${#files[@]} ))]}" ;;
-  *)      target="$(readlink -f "$1")" ;;
+  *)      if [[ -f "$1" ]]; then target="$(readlink -f "$1")"; else target="$dir/$1"; fi
+          [[ -f "$target" ]] || { echo "não achei: $1" >&2; exit 1; } ;;
 esac
 
 mkdir -p "$(dirname "$link")"
