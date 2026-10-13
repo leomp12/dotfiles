@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Destrava a tela do Hyprland remotamente (ssh leo-arch-dev .bin/unlock-screen), sem senha.
+# Cobre hyprlock normal, hyprlock travado/morto (lockdead) e Hyprland em safe mode após crash.
+set -u
+pid=$(pgrep -xo Hyprland) || {
+  echo "Hyprland fora (tuigreet?): sudo rm -f /run/greetd.run && sudo systemctl restart greetd" >&2
+  exit 2
+}
+sig=$(hyprctl instances -j | jq -r --argjson p "$pid" '.[] | select(.pid == $p).instance')
+hc() { HYPRLAND_INSTANCE_SIGNATURE=$sig hyprctl "$@"; }
+locked() { [[ $(hc locked) == true ]]; }
+wait_unlocked() { for _ in $(seq "$1"); do locked || return 0; sleep 0.5; done; return 1; }
+
+if locked; then
+  pkill -USR1 -x hyprlock
+  if ! wait_unlocked 10; then
+    # lockdead, hyprlock morto/travado, ou boot travado sem cliente de lock
+    pkill -KILL -x hyprlock && sleep 1
+    hc eval 'hl.clear_crashed_lockscreen()' >/dev/null
+    wait_unlocked 6 || { echo "FALHOU: ainda bloqueado" >&2; exit 1; }
+  fi
+fi
+# safe mode (recoverycfg) ou hypridle caído: sobe de novo para o lock por inatividade voltar
+pgrep -x hypridle >/dev/null || hc dispatch 'hl.dsp.exec_cmd("hypridle")' >/dev/null
+echo desbloqueado

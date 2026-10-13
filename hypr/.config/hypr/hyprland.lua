@@ -63,6 +63,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("udiskie --automount --notify")
+    hl.exec_cmd("hypridle") -- lock após 10 min sem input (hypridle.conf)
 end)
 
 
@@ -236,6 +237,9 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        allow_session_lock_restore = true, -- permite reabrir o hyprlock se ele crashar (lockdead)
+        key_press_enables_dpms     = true,
+        mouse_move_enables_dpms    = true,
     },
 })
 
@@ -285,6 +289,7 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(terminal .. " --class claude -e " .. os.getenv("HOME") .. "/.bin/claude-gogroup")) -- kitty com o Claude Code
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), { locked = true }) -- trava a tela; locked: reabre o hyprlock após crash
 -- Screenshots (grim + slurp + satty), ver ~/.bin/screenshot
 hl.bind("Print",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot region"))
 hl.bind("SHIFT + Print",  hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot window"))
