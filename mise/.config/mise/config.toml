@@ -1,0 +1,15 @@
+# Runtimes de dev (paridade com o WSL). Shims em ~/.local/share/mise/shims no PATH
+# (.profile): node/pnpm/bun resolvem a versão pelo cwd a cada execução, inclusive
+# no Bash tool do Claude Code, que não roda hooks de cd.
+
+[settings]
+# .nvmrc / .node-version e packageManager (bun) do repo valem sem .mise.toml
+idiomatic_version_file_enable_tools = ["node", "bun"]
+# Versão faltando = erro claro, nunca download implícito (agents/sandbox)
+not_found_auto_install = false
+
+[tools]
+# A primeira versão é a padrão fora de repos; 14.17.0 = pin exato de um .tool-versions
+node = ["20.19.0", "14.17.0", "14.21.3", "16.20.2", "18.20.7", "22.14.0", "24.18.0"]
+pnpm = "10.6.2"
+bun = "1.3.13"

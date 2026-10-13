@@ -9,10 +9,14 @@ export PATH="$HOME/.local/bin:$PATH:$HOME/.bin"
 
 bindkey "^[[3~" delete-char
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-[ -f .nvmrc ] && command -v nvm >/dev/null && nvm use
+# Runtimes (node/pnpm/bun) via mise: shims resolvem a versão pelo cwd (.nvmrc,
+# packageManager) a cada execução. Sem `mise activate`: hooks de cd não rodam no
+# Bash tool do Claude Code, shims funcionam igual para humano e agent.
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+
+# Globais do `bun add -g`
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$PATH:$BUN_INSTALL/bin"
 
 export PNPM_HOME="/home/leo/.local/share/pnpm"
 case ":$PATH:" in

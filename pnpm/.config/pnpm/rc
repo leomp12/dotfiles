@@ -1,0 +1,2 @@
+# Global do pnpm (10.16+). Supply chain: não instalar versões publicadas há menos de 24h (minutos)
+minimum-release-age=1440

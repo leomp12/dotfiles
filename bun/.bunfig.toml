@@ -1,0 +1,3 @@
+# Global do bun. Supply chain: não instalar versões publicadas há menos de 24h
+[install]
+minimumReleaseAge = 86400

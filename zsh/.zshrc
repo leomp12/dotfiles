@@ -32,29 +32,17 @@ eval "$(zoxide init zsh)"
 # bun completions
 [ -s "/home/leo/.bun/_bun" ] && source "/home/leo/.bun/_bun"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# nvm: follow .nvmrc on cd (nvm itself is loaded by ~/.profile)
-if typeset -f nvm >/dev/null; then
-  autoload -U add-zsh-hook
-  load-nvmrc() {
-    local nvmrc_path="$(nvm_find_nvmrc)"
-    if [ -n "$nvmrc_path" ]; then
-      local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-      if [ "$nvmrc_node_version" = "N/A" ]; then
-        nvm install
-      elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-        nvm use --silent
-      fi
-    elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-      nvm use default --silent
-    fi
-  }
-  add-zsh-hook chpwd load-nvmrc
-  load-nvmrc
-fi
+# Hábito do nvm em cima do mise (shims leem MISE_NODE_VERSION):
+# `nvm use 18` fixa na sessão, `nvm use` volta ao .nvmrc/padrão
+nvm() {
+  case "$1" in
+    use) if [[ -n "$2" ]]; then export MISE_NODE_VERSION="$2"; else unset MISE_NODE_VERSION; fi; node -v ;;
+    ls) mise ls node ;;
+    install) mise install "node@${2:?versão}" ;;
+    current) node -v ;;
+    *) echo "nvm é um atalho para o mise: use|ls|install|current" >&2; return 1 ;;
+  esac
+}
 
 # Claude Code fullscreen renderer on the local desktop only (not over SSH or inside tmux)
 [[ -z "$SSH_CONNECTION" && -z "$TMUX" ]] && export CLAUDE_CODE_NO_FLICKER=1
