@@ -1,4 +1,4 @@
-// waybar — leo-arch-dev. Cliques abrem TUIs flutuantes (classe tui-float, regra no hyprland.lua).
+// waybar — cliques abrem TUIs flutuantes (classe tui-float, regra no hyprland.lua).
 {
   "layer": "top",
   "position": "top",

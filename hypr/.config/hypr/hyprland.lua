@@ -289,7 +289,7 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(terminal .. " --class claude -e " .. os.getenv("HOME") .. "/.bin/claude-gogroup")) -- kitty com o Claude Code
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(terminal .. " --class claude -e claude")) -- kitty com o Claude Code
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), { locked = true }) -- trava a tela; locked: reabre o hyprlock após crash
 -- Screenshots (grim + slurp + satty), ver ~/.bin/screenshot
 hl.bind("Print",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot region"))

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Destrava a tela do Hyprland remotamente (ssh leo-arch-dev .bin/unlock-screen), sem senha.
+# Destrava a tela do Hyprland remotamente (ssh <host> .bin/unlock-screen), sem senha.
 # Cobre hyprlock normal, hyprlock travado/morto (lockdead) e Hyprland em safe mode após crash.
 set -u
 pid=$(pgrep -xo Hyprland) || {

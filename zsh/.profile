@@ -4,8 +4,8 @@ export EDITOR=nano
 # ~/.local/bin (claude, uv, etc.) antes de tudo: o greetd lê este arquivo, então vale para o Hyprland
 export PATH="$HOME/.local/bin:$PATH:$HOME/.bin"
 
-# Claude Code: conta padrão (ecom aposentada em 2026-10)
-export CLAUDE_CONFIG_DIR="$HOME/.claude/accounts/gogroup"
+# Configuração local fora do repo (ex.: CLAUDE_CONFIG_DIR)
+[ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local"
 
 bindkey "^[[3~" delete-char
 

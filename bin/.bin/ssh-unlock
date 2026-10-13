@@ -1,6 +1,6 @@
 #!/bin/bash
 # Carrega a chave no ssh-agent do systemd, sem expiração (até o reboot).
-#   ssh -t leo-arch-dev .bin/ssh-unlock   carrega de longe (WSL/Termux), pede a passphrase ali
+#   ssh -t <host> .bin/ssh-unlock   carrega de longe (WSL/Termux), pede a passphrase ali
 #   ssh-unlock [-r]                       sem TTY (Bash do Claude Code): abre um kitty na tela
 #                                         do Hyprland; -r recarrega mesmo se a chave já estiver carregada
 LIFETIME=${SSH_KEY_LIFETIME:-}  # vazio = sem expiração (até o reboot)
@@ -16,7 +16,7 @@ fi
 
 his=$(ls -t "$XDG_RUNTIME_DIR/hypr" 2>/dev/null | head -1)
 if [[ -z $his ]] || ! HYPRLAND_INSTANCE_SIGNATURE=$his hyprctl -j monitors &>/dev/null; then
-  echo "sem TTY e sem Hyprland: rode 'ssh -t leo-arch-dev .bin/ssh-unlock' no WSL/Termux" >&2
+  echo "sem TTY e sem Hyprland: rode 'ssh -t <host> .bin/ssh-unlock' no WSL/Termux" >&2
   exit 1
 fi
 # config do Hyprland em Lua: dispatch recebe uma expressão hl.dsp.*
