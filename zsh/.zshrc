@@ -36,6 +36,9 @@ eval "$(zoxide init zsh)"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# Claude Code fullscreen renderer on the local desktop only (not over SSH or inside tmux)
+[[ -z "$SSH_CONNECTION" && -z "$TMUX" ]] && export CLAUDE_CODE_NO_FLICKER=1
+
 # Multiple Claude Code accounts/config with .clauderc
 claude() {
   local config_file=".clauderc"
