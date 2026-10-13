@@ -22,12 +22,8 @@ esac
 # Skip warnings with pnpm-specific fields on .npmrc
 export npm_config_loglevel=error
 
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-  ssh-agent -t 6h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-fi
-if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
-  source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-fi
-if ! ssh-add -l &>/dev/null; then
+# ssh-agent do systemd (ssh-agent.socket), sem expiração; sem TTY, ~/.bin/ssh-unlock
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+if [[ -t 0 ]] && ! ssh-add -l &>/dev/null; then
   ssh-add 2>/dev/null
 fi

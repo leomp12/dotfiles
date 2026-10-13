@@ -1,0 +1,24 @@
+#!/bin/bash
+# Screenshot no Hyprland (estilo Omarchy): grim + slurp capturam, satty anota/copia/salva.
+#   screenshot region   -> seleciona uma área (Print)
+#   screenshot window   -> escolhe uma janela (Shift+Print)
+#   screenshot output   -> monitor inteiro (Ctrl+Print)
+set -euo pipefail
+export PATH="$HOME/.local/bin:$PATH"
+mode="${1:-region}"
+dir="$HOME/Pictures/Screenshots"; mkdir -p "$dir"
+file="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
+
+case "$mode" in
+  region) geom=$(slurp) ;;
+  window)
+    geom=$(hyprctl clients -j | jq -r '.[] | select(.mapped and .workspace.id >= 0) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1]) \(.class): \(.title)"' | slurp -r) ;;
+  output)
+    geom=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | "\(.x),\(.y) \(.width)x\(.height)"') ;;
+  *) echo "uso: screenshot [region|window|output]" >&2; exit 2 ;;
+esac
+[ -n "$geom" ] || exit 0   # Esc no slurp = cancelado
+
+grim -g "$geom" - | satty --filename - --output-filename "$file" \
+  --early-exit --copy-command wl-copy --save-after-copy --actions-on-enter save-to-clipboard \
+  --initial-tool crop
