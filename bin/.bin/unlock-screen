@@ -8,6 +8,7 @@ pid=$(pgrep -xo Hyprland) || {
 }
 sig=$(hyprctl instances -j | jq -r --argjson p "$pid" '.[] | select(.pid == $p).instance')
 hc() { HYPRLAND_INSTANCE_SIGNATURE=$sig hyprctl "$@"; }
+hc dispatch 'hl.dsp.dpms({action = "on"})' >/dev/null  # caso o hypridle tenha apagado o monitor
 locked() { [[ $(hc locked) == true ]]; }
 wait_unlocked() { for _ in $(seq "$1"); do locked || return 0; sleep 0.5; done; return 1; }
 
