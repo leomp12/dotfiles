@@ -292,8 +292,8 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(terminal .. " --class claude -e claude")) -- kitty com o Claude Code
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), { locked = true }) -- trava a tela; locked: reabre o hyprlock após crash
--- Screenshots (grim + slurp + satty), ver ~/.bin/screenshot
-hl.bind("Print",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot region"))
+-- Screenshots (grim + slurp + satty) e gravação (wf-recorder), ver ~/.bin/screenshot e ~/.bin/screenrecord
+hl.bind("Print",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot menu")) -- menu: área/janela/tela/gravação
 hl.bind("SHIFT + Print",  hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot window"))
 hl.bind("CTRL + Print",   hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot output"))
 -- Clipboard, cor e notificações
@@ -328,7 +328,7 @@ end
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot region")) -- print de área, igual ao Win+Shift+S
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))

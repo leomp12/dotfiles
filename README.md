@@ -26,7 +26,7 @@ stow -D -t ~ kitty                # desfaz um pacote
 | `xdg` | `.config/user-dirs.dirs` em kebab-case (`~/downloads`, `~/pictures`...) + `user-dirs.conf` com `enabled=False` |
 | `claude` | `CLAUDE.md` global (pendente: ainda não versionado) |
 
-Dependências (pacman): `zsh zsh-autosuggestions zsh-syntax-highlighting zsh-completions fzf zoxide stow kitty ttf-jetbrains-mono-nerd grim slurp satty wl-clipboard jq xdg-user-dirs waybar fuzzel dunst cliphist hyprpicker hyprlock hypridle udiskie bluetui wiremix pamixer playerctl`.
+Dependências (pacman): `zsh zsh-autosuggestions zsh-syntax-highlighting zsh-completions fzf zoxide stow kitty ttf-jetbrains-mono-nerd grim slurp satty wf-recorder wl-clipboard jq xdg-user-dirs waybar fuzzel dunst cliphist hyprpicker hyprlock hypridle udiskie bluetui wiremix pamixer playerctl`.
 
 ## Wallpapers
 

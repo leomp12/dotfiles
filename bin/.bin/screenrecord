@@ -1,0 +1,43 @@
+#!/bin/bash
+# Gravação de tela no Hyprland: wf-recorder com h264 por hardware (VAAPI, Radeon), sem áudio.
+#   screenrecord region   -> seleciona uma área e grava
+#   screenrecord output   -> grava o monitor em foco
+#   screenrecord stop     -> para a gravação em andamento
+#   screenrecord status   -> exit 0 se estiver gravando
+# Rodar de novo com uma gravação ativa também para (toggle). Salva em ~/videos/screenrecords.
+set -euo pipefail
+mode="${1:-region}"
+
+if [ "$mode" = status ]; then
+  pgrep -x wf-recorder >/dev/null; exit
+fi
+if pgrep -x wf-recorder >/dev/null; then
+  pkill -INT -x wf-recorder   # SIGINT: wf-recorder finaliza o mp4 direito
+  exit 0
+fi
+[ "$mode" = stop ] && exit 0
+
+dir="$(xdg-user-dir VIDEOS)/screenrecords"; mkdir -p "$dir"
+file="$dir/$(date +%Y-%m-%d_%H-%M-%S).mp4"
+
+case "$mode" in
+  region)
+    geom=$(slurp) || exit 0   # Esc no slurp = cancelado
+    # h264_vaapi exige largura/altura pares
+    read -r x y w h < <(sed -E 's/[,x]/ /g' <<<"$geom")
+    target=(-g "$x,$y $((w / 2 * 2))x$((h / 2 * 2))") ;;
+  output)
+    target=(-o "$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')") ;;
+  *) echo "uso: screenrecord [region|output|stop|status]" >&2; exit 2 ;;
+esac
+
+notify-send -t 2000 -i media-record "Gravando tela" "Print → Parar gravação para finalizar"
+wf-recorder "${target[@]}" -c h264_vaapi -d /dev/dri/renderD128 -f "$file" >/dev/null 2>&1 || true
+
+if [ -s "$file" ]; then
+  wl-copy --type text/uri-list "file://$file"
+  notify-send -i video-x-generic "Gravação salva" "$file"
+else
+  rm -f "$file"
+  notify-send -u critical "Gravação falhou" "wf-recorder não gerou o arquivo"
+fi
