@@ -305,7 +305,11 @@ hl.bind(mainMod .. " + comma",        hl.dsp.exec_cmd("dunstctl close"))
 hl.bind(mainMod .. " + SHIFT + comma", hl.dsp.exec_cmd("dunstctl history-pop"))
 local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+-- sair do Hyprland: Super+Shift+M + confirmação no fuzzel (Super+M sozinho matava a sessão sem querer)
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd([[
+  [ "$(printf 'Cancelar\nSair do Hyprland' | fuzzel --dmenu --prompt='sair? ❯ ')" = 'Sair do Hyprland' ] &&
+  { command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'; }
+]]))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
