@@ -28,16 +28,16 @@ case "$mode" in
     target=(-g "$x,$y $((w / 2 * 2))x$((h / 2 * 2))") ;;
   output)
     target=(-o "$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')") ;;
-  *) echo "uso: screenrecord [region|output|stop|status]" >&2; exit 2 ;;
+  *) echo "usage: screenrecord [region|output|stop|status]" >&2; exit 2 ;;
 esac
 
-notify-send -t 2000 -i media-record "Gravando tela" "Print → Parar gravação para finalizar"
+notify-send -t 2000 -i media-record "Recording screen" "Print → Stop recording to finish"
 wf-recorder "${target[@]}" -c h264_vaapi -d /dev/dri/renderD128 -f "$file" >/dev/null 2>&1 || true
 
 if [ -s "$file" ]; then
   wl-copy --type text/uri-list "file://$file"
-  notify-send -i video-x-generic "Gravação salva" "$file"
+  notify-send -i video-x-generic "Recording saved" "$file"
 else
   rm -f "$file"
-  notify-send -u critical "Gravação falhou" "wf-recorder não gerou o arquivo"
+  notify-send -u critical "Recording failed" "wf-recorder did not produce a file"
 fi

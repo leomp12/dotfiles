@@ -3,6 +3,7 @@
 #   screenshot region   -> seleciona uma área (Print)
 #   screenshot window   -> escolhe uma janela (Shift+Print)
 #   screenshot output   -> monitor inteiro (Ctrl+Print)
+#   screenshot clip     -> seleciona uma área e copia direto pro clipboard, sem satty (Super+Shift+S)
 #   screenshot menu     -> menu fuzzel com as opções acima + gravação de tela (Print)
 set -euo pipefail
 export PATH="$HOME/.local/bin:$PATH"
@@ -10,21 +11,27 @@ mode="${1:-region}"
 
 if [ "$mode" = menu ]; then
   if "$HOME/.bin/screenrecord" status; then
-    options="󰓛  Parar gravação\n"
+    options="󰓛  Stop recording\n"
   else
-    options="󰆞  Print de área\n󰖯  Print de janela\n󰍹  Print da tela inteira\n󰕧  Vídeo de área\n󰑋  Vídeo da tela inteira\n"
+    options="󰆞  Screenshot region\n󰖯  Screenshot window\n󰍹  Screenshot full screen\n󰕧  Record region\n󰑋  Record full screen\n"
   fi
-  choice=$(printf "$options" | fuzzel --dmenu --prompt='print ❯ ' --lines=5 --width=30 --font='JetBrainsMono Nerd Font Mono:size=12') || exit 0  # Mono: ícones com largura fixa, alinhados
+  choice=$(printf "$options" | fuzzel --dmenu --prompt='print screen ❯ ' --lines=5 --width=30 --font='JetBrainsMono Nerd Font Mono:size=12') || exit 0  # Mono: ícones com largura fixa, alinhados
   sleep 0.2   # deixa o fuzzel sumir antes de capturar
   case "$choice" in
-    *"Parar gravação")        exec "$HOME/.bin/screenrecord" stop ;;
-    *"Vídeo de área")         exec "$HOME/.bin/screenrecord" region ;;
-    *"Vídeo da tela inteira") exec "$HOME/.bin/screenrecord" output ;;
-    *"Print de área")         mode=region ;;
-    *"Print de janela")       mode=window ;;
-    *"Print da tela inteira") mode=output ;;
+    *"Stop recording")        exec "$HOME/.bin/screenrecord" stop ;;
+    *"Record region")         exec "$HOME/.bin/screenrecord" region ;;
+    *"Record full screen")    exec "$HOME/.bin/screenrecord" output ;;
+    *"Screenshot region")     mode=region ;;
+    *"Screenshot window")     mode=window ;;
+    *"Screenshot full screen") mode=output ;;
     *) exit 0 ;;
   esac
+fi
+if [ "$mode" = clip ]; then
+  geom=$(slurp) || exit 0   # Esc no slurp = cancelado
+  grim -g "$geom" - | wl-copy --type image/png
+  notify-send -t 2000 -i image-x-generic "Screenshot copied to clipboard"
+  exit 0
 fi
 dir="$(xdg-user-dir PICTURES)/screenshots"; mkdir -p "$dir"
 file="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
@@ -35,7 +42,7 @@ case "$mode" in
     geom=$(hyprctl clients -j | jq -r '.[] | select(.mapped and .workspace.id >= 0) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1]) \(.class): \(.title)"' | slurp -r) ;;
   output)
     geom=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | "\(.x),\(.y) \(.width)x\(.height)"') ;;
-  *) echo "uso: screenshot [region|window|output|menu]" >&2; exit 2 ;;
+  *) echo "usage: screenshot [region|window|output|clip|menu]" >&2; exit 2 ;;
 esac
 [ -n "$geom" ] || exit 0   # Esc no slurp = cancelado
 

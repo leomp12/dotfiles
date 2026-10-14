@@ -307,7 +307,7 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 -- sair do Hyprland: Super+Shift+M + confirmação no fuzzel (Super+M sozinho matava a sessão sem querer)
 hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd([[
-  [ "$(printf 'Cancelar\nSair do Hyprland' | fuzzel --dmenu --prompt='sair? ❯ ')" = 'Sair do Hyprland' ] &&
+  [ "$(printf 'Cancel\nExit Hyprland' | fuzzel --dmenu --prompt='exit? ❯ ')" = 'Exit Hyprland' ] &&
   { command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'; }
 ]]))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
@@ -332,7 +332,7 @@ end
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot region")) -- print de área, igual ao Win+Shift+S
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot clip")) -- área direto pro clipboard, igual ao Win+Shift+S
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
