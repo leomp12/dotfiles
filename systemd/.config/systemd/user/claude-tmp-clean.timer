@@ -1,0 +1,9 @@
+[Unit]
+Description=Limpeza horária do /tmp do Claude Code
+
+[Timer]
+OnCalendar=hourly
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target

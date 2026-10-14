@@ -1,0 +1,59 @@
+#!/bin/bash
+# Limpa do /tmp (tmpfs = RAM) o que sessões mortas do Claude Code deixaram para trás.
+# Roda pelo timer claude-tmp-clean.timer (systemd --user). Uso: claude-tmp-clean [--dry-run]
+#
+# Uma pasta de sessão (/tmp/claude-$UID/<projeto>/<session-id>) só é apagada se TUDO for verdade:
+#   1. nenhum processo tem cwd ou arquivo aberto dentro dela;
+#   2. o transcript da sessão (~/.claude/**/projects/*/<session-id>.jsonl) está parado há mais de $DAYS dias;
+#   3. nenhum arquivo dentro dela foi lido, escrito ou alterado há $DAYS dias.
+# Os /tmp/bunx-$UID-* (cache do bunx) seguem as regras 1 e 3.
+set -euo pipefail
+shopt -s nullglob
+
+DAYS=${CLAUDE_TMP_DAYS:-2}
+min=$((DAYS * 1440))
+dry=0; [ "${1:-}" = --dry-run ] && dry=1
+uid=$(id -u)
+root=/tmp/claude-$uid
+
+# cwd e arquivos abertos de todos os processos do usuário (os de outros usuários não são legíveis)
+open_paths=$(for p in /proc/[0-9]*; do readlink "$p"/cwd "$p"/fd/* 2>/dev/null; done || true)
+
+in_use() { grep -qxF "$1" <<<"$open_paths" || grep -qF "$1/" <<<"$open_paths"; }
+
+# só arquivos: ler um diretório (o próprio find) atualiza o atime dele, com strictatime
+recently_touched() {
+  [ -n "$(find "$1" -type f \( -amin -"$min" -o -mmin -"$min" -o -cmin -"$min" \) -print -quit 2>/dev/null)" ]
+}
+
+transcript_active() {
+  local t
+  for t in "$HOME"/.claude/projects/*/"$1".jsonl "$HOME"/.claude/accounts/*/projects/*/"$1".jsonl; do
+    [ -n "$(find "$t" -mmin -"$min" 2>/dev/null)" ] && return 0
+  done
+  return 1
+}
+
+remove() {
+  local size; size=$(du -sh "$1" 2>/dev/null | cut -f1)
+  if ((dry)); then echo "removeria $1 ($size)"; else rm -rf -- "$1" && echo "removido $1 ($size)"; fi
+}
+
+uuid='[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+for d in "$root"/*/*/; do
+  d=${d%/}; id=${d##*/}
+  [[ $id =~ ^$uuid$ ]] || continue
+  in_use "$d" && continue
+  transcript_active "$id" && continue
+  recently_touched "$d" && continue
+  remove "$d"
+done
+((dry)) || rmdir --ignore-fail-on-non-empty "$root"/*/ 2>/dev/null || true   # pastas de projeto vazias
+
+for d in /tmp/bunx-"$uid"-*/; do
+  d=${d%/}
+  [ -O "$d" ] || continue
+  in_use "$d" && continue
+  recently_touched "$d" && continue
+  remove "$d"
+done

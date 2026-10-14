@@ -1,0 +1,8 @@
+[Unit]
+Description=Limpa do /tmp os temporários de sessões mortas do Claude Code
+
+[Service]
+Type=oneshot
+ExecStart=%h/.bin/claude-tmp-clean
+Nice=19
+IOSchedulingClass=idle
