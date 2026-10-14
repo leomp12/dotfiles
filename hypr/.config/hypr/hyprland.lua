@@ -213,6 +213,7 @@ hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "
 hl.config({
     dwindle = {
         preserve_split = true, -- You probably want this
+        split_width_multiplier = 1.35, -- ultrawide: metades de 1280x1080 contam como "altas" → 3ª janela divide em cima/embaixo
     },
 })
 
