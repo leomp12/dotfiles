@@ -36,7 +36,7 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal    = "kitty"
-local fileManager = "nautilus"
+local fileManager = terminal .. " --class yazi -e yazi"  -- yazi no kitty; Nautilus fica no launcher (arrastar arquivos, miniaturas)
 local menu        = "fuzzel"
 
 
@@ -313,6 +313,11 @@ hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd([[
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
+-- SHIFT = mesma coisa, mas a janela já abre flutuando e centralizada (bin/float-exec)
+local floatExec = os.getenv("HOME") .. "/.bin/float-exec "
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(menu .. " --launch-prefix=" .. floatExec))
+hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(floatExec .. terminal))
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(floatExec .. fileManager))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 

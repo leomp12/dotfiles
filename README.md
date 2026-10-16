@@ -16,9 +16,9 @@ stow -D -t ~ kitty                # desfaz um pacote
 | Pacote | Conteúdo |
 |---|---|
 | `zsh` | `.zshrc`, `.profile` (lê `~/.profile.local`, fora do repo), `.p10k.zsh` (p10k via clone em `~/powerlevel10k`) |
-| `bin` | `.bin/`: `aur-pkg`, `clear-pacman`, `screenshot`, `wallpaper`, `ssh-unlock` (carrega a chave no ssh-agent do systemd), `unlock-screen` (destrava a tela remotamente via SSH), `screenrecord`, `claude-tmp-clean` (apaga do `/tmp` os temporários de sessões mortas do Claude Code) |
+| `bin` | `.bin/`: `aur-pkg`, `clear-pacman`, `screenshot`, `wallpaper`, `ssh-unlock` (carrega a chave no ssh-agent do systemd), `unlock-screen` (destrava a tela remotamente via SSH), `screenrecord`, `float-exec` (abre um comando flutuando e centralizado), `claude-tmp-clean` (apaga do `/tmp` os temporários de sessões mortas do Claude Code) |
 | `kitty` | `.config/kitty/kitty.conf` |
-| `hypr` | `.config/hypr/hyprland.lua` + `hyprpaper.conf` + `hyprlock.conf` + `hypridle.conf` (SUPER+A abre o kitty com o Claude; SUPER+L trava a tela, que também trava após 30 min sem input; SUPER+CTRL+SPACE troca o wallpaper; SUPER+SHIFT+M sai do Hyprland, com confirmação; Print = menu de screenshot/gravação, Shift+Print / Ctrl+Print = screenshot de janela / tela; SUPER+SHIFT+S = área direto pro clipboard) |
+| `hypr` | `.config/hypr/hyprland.lua` + `hyprpaper.conf` + `hyprlock.conf` + `hypridle.conf` (SUPER+A abre o kitty com o Claude; SUPER+L trava a tela, que também trava após 30 min sem input; SUPER+CTRL+SPACE troca o wallpaper; SUPER+SHIFT+M sai do Hyprland, com confirmação; SUPER+E = yazi (gerenciador de arquivos no terminal; Nautilus fica no launcher); com SHIFT, SUPER+R / Q / E abrem o app / terminal / yazi já flutuando (`float-exec`); Print = menu de screenshot/gravação, Shift+Print / Ctrl+Print = screenshot de janela / tela; SUPER+SHIFT+S = área direto pro clipboard) |
 | `satty` | `.config/satty/config.toml` (editor de screenshot) |
 | `waybar` | barra; cliques abrem `bluetui`, `nmtui`, `wiremix` flutuando |
 | `fuzzel` | lançador (SUPER+R) e seletor do clipboard (SUPER+CTRL+V) |
@@ -27,7 +27,7 @@ stow -D -t ~ kitty                # desfaz um pacote
 | `claude` | `.claude/accounts/gogroup/CLAUDE.md` global (ex.: não usar o `/tmp`, que é RAM, para repos e `node_modules`) |
 | `systemd` | units de usuário: `claude-tmp-clean.timer` roda o `claude-tmp-clean` de hora em hora |
 
-Dependências (pacman): `zsh zsh-autosuggestions zsh-syntax-highlighting zsh-completions fzf zoxide stow kitty ttf-jetbrains-mono-nerd grim slurp satty wf-recorder wl-clipboard jq xdg-user-dirs waybar fuzzel dunst cliphist hyprpicker hyprlock hypridle udiskie bluetui wiremix pamixer playerctl`.
+Dependências (pacman): `zsh zsh-autosuggestions zsh-syntax-highlighting zsh-completions fzf zoxide stow kitty ttf-jetbrains-mono-nerd grim slurp satty wf-recorder wl-clipboard jq xdg-user-dirs waybar fuzzel dunst cliphist hyprpicker hyprlock hypridle udiskie yazi ffmpegthumbnailer poppler fd 7zip imagemagick bluetui wiremix pamixer playerctl`.
 
 ## Wallpapers
 

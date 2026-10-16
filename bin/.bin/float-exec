@@ -1,0 +1,28 @@
+#!/bin/bash
+# Abre um comando já flutuando e centralizado no Hyprland.
+#   float-exec kitty
+#   fuzzel --launch-prefix=float-exec   (Super+Shift+R: launcher que abre o app flutuando)
+# Apps de instância única (Nautilus, Firefox...) abrem a janela num processo que já estava rodando,
+# e aí a regra do exec_cmd (presa ao PID novo) não pega: nesse caso flutua a janela nova depois que ela aparece.
+set -euo pipefail
+[ $# -gt 0 ] || { echo "usage: float-exec <command> [args...]" >&2; exit 2; }
+
+read -r w h < <(hyprctl monitors -j | jq -r '.[] | select(.focused) | "\(.width / .scale * 0.45 | floor) \(.height / .scale * 0.5 | floor)"')
+before=$(hyprctl clients -j | jq -r '.[].address')
+
+cmd=$(printf '%q ' "$@")
+eq='='; while [[ $cmd == *"]$eq]"* ]]; do eq+='='; done   # string longa Lua que o comando não consegue fechar
+hyprctl -q dispatch "hl.dsp.exec_cmd([$eq[$cmd]$eq], { float = true, size = '$w $h', center = true })"
+
+for _ in $(seq 50); do   # até 5 s esperando a janela
+  sleep 0.1
+  new=$(hyprctl clients -j | jq -c --arg before "$before" \
+    '[.[] | select(.address as $a | $before | split("\n") | index($a) | not)] | first // empty')
+  [ -n "$new" ] || continue
+  [ "$(jq -r .floating <<<"$new")" = true ] && exit 0
+  win="address:$(jq -r .address <<<"$new")"
+  hyprctl -q dispatch "hl.dsp.window.float({ action = 'enable', window = '$win' })"
+  hyprctl -q dispatch "hl.dsp.window.resize({ x = $w, y = $h, window = '$win' })"
+  hyprctl -q dispatch "hl.dsp.window.center({ window = '$win' })"
+  exit 0
+done

@@ -58,3 +58,13 @@ claude() {
   fi
 }
 
+
+# y = yazi; ao sair (q), o shell fica na pasta onde o yazi estava
+y() {
+  local tmp cwd
+  tmp="$(mktemp -t yazi-cwd.XXXXXX)"
+  yazi "$@" --cwd-file="$tmp"
+  cwd="$(<"$tmp")"
+  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+  rm -f -- "$tmp"
+}
