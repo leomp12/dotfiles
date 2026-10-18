@@ -239,8 +239,11 @@ hl.config({
 
 hl.config({
     misc = {
-        force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        -- sem o wallpaper padrão do Hyprland: ele aparecia por um instante quando o hyprpaper troca a imagem
+        force_default_wallpaper = 0,
+        disable_hyprland_logo   = true,
+        disable_splash_rendering = true,
+        background_color        = 0x000000, -- fundo preto atrás do hyprpaper
         allow_session_lock_restore = true, -- permite reabrir o hyprlock se ele crashar (lockdead)
         key_press_enables_dpms     = true,
         mouse_move_enables_dpms    = true,
