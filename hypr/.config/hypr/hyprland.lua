@@ -193,6 +193,14 @@ hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "
 hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "quick" })
 
+-- Sem borda quando a janela está sozinha no workspace (só ela tiled e visível): não há o que distinguir.
+-- Gaps e rounding continuam iguais.
+hl.window_rule({
+    name  = "no-border-when-alone",
+    match = { float = false, workspace = "w[tv1]" },
+    border_size = 0,
+})
+
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
 -- uncomment all if you wish to use that.
