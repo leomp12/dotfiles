@@ -8,7 +8,7 @@ Branch `wsl2`: Arch no WSL2 (layout plano, sem stow).
 ```bash
 git clone -b arch git@github.com:leomp12/dotfiles.git ~/code/leomp12/dotfiles
 cd ~/code/leomp12/dotfiles
-stow -t ~ zsh bin kitty hypr satty xdg waybar fuzzel dunst claude systemd  # cria os symlinks no $HOME
+stow -t ~ zsh bin kitty hypr satty xdg waybar fuzzel dunst yazi claude systemd  # cria os symlinks no $HOME
 systemctl --user enable --now claude-tmp-clean.timer wallpaper-rotate.timer
 stow -D -t ~ kitty                # desfaz um pacote
 ```
@@ -24,10 +24,28 @@ stow -D -t ~ kitty                # desfaz um pacote
 | `fuzzel` | lançador (SUPER+R) e seletor do clipboard (SUPER+CTRL+V) |
 | `dunst` | notificações (SUPER+, fecha, SUPER+SHIFT+, histórico) |
 | `xdg` | `.config/user-dirs.dirs` em kebab-case (`~/downloads`, `~/pictures`...) + `user-dirs.conf` com `enabled=False` |
+| `yazi` | `.config/yazi/theme.toml`: moldura na paleta navy; as cores dos arquivos seguem as ANSI do terminal |
 | `claude` | `.claude/accounts/gogroup/CLAUDE.md` global (ex.: não usar o `/tmp`, que é RAM, para repos e `node_modules`) |
 | `systemd` | units de usuário: `claude-tmp-clean.timer` roda o `claude-tmp-clean` de hora em hora; `wallpaper-rotate.timer` passa para o próximo wallpaper a cada hora |
 
 Dependências (pacman): `zsh zsh-autosuggestions zsh-syntax-highlighting zsh-completions fzf zoxide stow kitty ttf-jetbrains-mono-nerd grim slurp satty wf-recorder wl-clipboard jq xdg-user-dirs waybar fuzzel dunst cliphist hyprpicker hyprlock hypridle udiskie yazi ffmpegthumbnailer poppler fd 7zip imagemagick bluetui wiremix pamixer playerctl`.
+
+## Paleta
+
+Navy, tirada do filtro dos wallpapers. Hyprland, waybar, fuzzel, dunst e yazi usam as mesmas cores:
+
+| | cor | uso |
+|---|---|---|
+| base | `#0b1628` | fundo da waybar; texto sobre o accent |
+| night | `#060b14` | fundo das notificações (75% opaco) |
+| panel | `#15233d` | fundo do fuzzel |
+| surface | `#2e4570` | hover, seleção do fuzzel |
+| dim | `#2a3d61` | borda das janelas inativas, bordas discretas do yazi |
+| folder | `#8199bd` | pastas no yazi |
+| muted | `#8195b8` | texto apagado |
+| text | `#dbe4f2` | texto sobre fundo escuro |
+| accent | `#9db4d6` | borda da janela em foco, workspace ativo, prompt e matches |
+| urgent | `#e0707a` | urgente/crítico (notificação crítica: fundo `#3a1218`) |
 
 ## Wallpapers
 

@@ -2,34 +2,38 @@
 [global]
 font = JetBrainsMono Nerd Font 10
 origin = top-right
-# a waybar já reserva o topo; 16px fica um pouco além do gaps_out (8) para não alinhar com a borda da janela do canto
-offset = (16, 16)
+# 12px abaixo da waybar e da borda direita (a waybar já reserva o topo): um pouco para dentro do canto da janela, que fica a 8px (gaps_out)
+offset = (12, 12)
 width = 320
 corner_radius = 6
-frame_width = 2
-frame_color = "#89b4fa"
+frame_width = 0
+frame_color = "#2a3d61"
 separator_color = frame
 gap_size = 6
 padding = 8
 horizontal_padding = 10
 icon_position = left
 max_icon_size = 32
+# procura ícones pelo nome no tema (sem isso, notify-send -i kitty e apps que mandam só o nome ficam sem ícone)
+enable_recursive_icon_lookup = true
+icon_theme = "Adwaita, hicolor"
 history_length = 30
 mouse_left_click = do_action, close_current
 mouse_right_click = close_all
 
 [urgency_low]
-background = "#1e1e2e"
-foreground = "#a6adc8"
+background = "#060b14bf"
+foreground = "#a9b8d2"
 timeout = 4
 
 [urgency_normal]
-background = "#1e1e2e"
-foreground = "#cdd6f4"
+background = "#060b14bf"
+foreground = "#dbe4f2"
 timeout = 6
 
 [urgency_critical]
-background = "#1e1e2e"
-foreground = "#cdd6f4"
-frame_color = "#f38ba8"
+# sem borda, a crítica se distingue pelo fundo avermelhado
+background = "#3a1218d9"
+foreground = "#dbe4f2"
+frame_color = "#e0707a"
 timeout = 0
