@@ -31,4 +31,10 @@ Dependências (pacman): `zsh zsh-autosuggestions zsh-syntax-highlighting zsh-com
 
 ## Wallpapers
 
-As imagens não ficam no repo (licenças de terceiros). `~/.bin/wallpaper` lê de `$(xdg-user-dir PICTURES)/wallpapers/space` e aponta o symlink `~/.cache/wallpaper`, que o `hyprpaper.conf` usa. Fontes: temas `starship` e `ethereal` do Omarchy, e os temas da comunidade Event Horizon (OldJobobo), Mars (steve-lohmeyer, MIT) e Pulsar (bjarneo).
+As imagens não ficam no repo (licenças de terceiros). `~/.bin/wallpaper` lê de `$(xdg-user-dir PICTURES)/wallpapers/space` e aponta o symlink `~/.cache/wallpaper`, que o `hyprpaper.conf` usa. Fonte: 7 das 10 imagens do tema da comunidade Event Horizon (OldJobobo/omarchy-event-horizon-theme; fora as de astronauta perdido: 02, 03 e 05), escurecidas com um filtro navy:
+
+```sh
+# originais em ~/pictures/wallpapers/sources/event-horizon; navy-clut.png = gradiente #000000 -> #10213f -> #9db4d6
+magick -size 1x128 gradient:'#000000-#10213f' \( -size 1x128 gradient:'#10213f-#9db4d6' \) -append -resize 1x256\! navy-clut.png
+magick orig.jpg -resize '3840x>' -colorspace Gray -gamma 0.85 -colorspace sRGB -type TrueColor navy-clut.png -clut -quality 92 out.jpg
+```
