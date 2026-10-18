@@ -1,0 +1,8 @@
+[Unit]
+Description=Troca o wallpaper a cada hora
+
+[Timer]
+OnCalendar=hourly
+
+[Install]
+WantedBy=timers.target

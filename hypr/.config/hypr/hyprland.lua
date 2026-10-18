@@ -116,14 +116,16 @@ hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
-        gaps_in  = 5,
-        gaps_out = 20,
+        -- minimalista: gaps_in vale para cada lado da janela, então 2 = 4px entre duas janelas; 8px até a borda da tela
+        gaps_in  = 2,
+        gaps_out = 8,
 
         border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            -- paleta navy dos wallpapers: foco no azul-claro sólido, inativas num navy apagado
+            active_border   = "rgb(9db4d6)",
+            inactive_border = "rgba(2a3d61aa)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -136,7 +138,7 @@ hl.config({
     },
 
     decoration = {
-        rounding       = 10,
+        rounding       = 6,
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
@@ -144,7 +146,7 @@ hl.config({
         inactive_opacity = 1.0,
 
         shadow = {
-            enabled      = true,
+            enabled      = false,
             range        = 4,
             render_power = 3,
             color        = 0xee1a1a1a,

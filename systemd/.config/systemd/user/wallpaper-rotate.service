@@ -1,0 +1,6 @@
+[Unit]
+Description=Troca o wallpaper do Hyprland para o próximo da pasta
+
+[Service]
+Type=oneshot
+ExecStart=%h/.bin/wallpaper next
