@@ -201,6 +201,60 @@ hl.window_rule({
     border_size = 0,
 })
 
+-- Navegador dividindo o workspace com uma outra janela (geralmente terminal): o navegador fica com
+-- 1300px de página (com o zoom padrão de 120% do Firefox, 1560px de janela) em vez de 50/50. Ajusta quando uma janela abre ou fecha; um resize manual depois
+-- disso fica como está.
+local browserClass = { firefox = true, chromium = true }
+local browserWidth = math.floor(1300 * 1.2) -- largura da página × zoom padrão do navegador
+
+local function balanceBrowserSplit(wsId)
+    local tiled = {}
+    for _, w in ipairs(hl.get_workspace_windows(wsId)) do
+        if w.mapped and not w.floating and not w.hidden then tiled[#tiled + 1] = w end
+    end
+    if #tiled ~= 2 then return end
+    local left, right = tiled[1], tiled[2]
+    if left.at.x > right.at.x then left, right = right, left end
+    if left.at.x == right.at.x then return end -- um em cima do outro: deixa
+    -- sempre redimensiona a janela da esquerda: no 0.56, resize exato na da direita sai invertido
+    local leftWidth
+    if browserClass[left.class] and not browserClass[right.class] then leftWidth = browserWidth
+    elseif browserClass[right.class] and not browserClass[left.class] then leftWidth = left.size.x + right.size.x - browserWidth
+    else return end
+    if left.size.x == leftWidth then return end
+    -- resize de janela tiled ajusta a divisão do dwindle; não depende de qual janela está em foco
+    hl.dispatch(hl.dsp.window.resize({ x = leftWidth, y = left.size.y, window = left }))
+end
+
+-- espera o layout posicionar a janela antes de medir
+local function balanceLater(wsId)
+    hl.timer(function() balanceBrowserSplit(wsId) end, { timeout = 60, type = "oneshot" })
+end
+hl.on("window.open",  function(w) if w.workspace then balanceLater(w.workspace.id) end end)
+hl.on("window.close", function(w) if w.workspace then balanceLater(w.workspace.id) end end)
+
+-- DevTools em janela separada (Firefox e Chromium) abre flutuando e centralizado.
+-- O título chega depois do mapeamento, então uma window_rule não pega: reage à troca de título.
+local devtoolsDone = {}
+local function floatDevtools(w)
+    -- antes de mapear, o float é ignorado: só marca como feito com a janela já na tela
+    if not w.mapped or not browserClass[w.class] or w.floating or devtoolsDone[w.address] then return end
+    local title = w.title or ""
+    if not (title:find("^Developer Tools") or title:find("^DevTools")) then return end
+    devtoolsDone[w.address] = true
+    local m = w.monitor or hl.get_active_monitor()
+    local width, height = math.floor(m.width / m.scale * 0.5), math.floor(m.height / m.scale * 0.75)
+    hl.dispatch(hl.dsp.window.float({ action = "enable", window = w }))
+    hl.dispatch(hl.dsp.window.resize({ x = width, y = height, window = w }))
+    hl.dispatch(hl.dsp.window.center({ window = w }))
+end
+hl.on("window.open", function(w)
+    floatDevtools(w)
+    hl.timer(function() if w.mapped then floatDevtools(w) end end, { timeout = 300, type = "oneshot" })
+end)
+hl.on("window.title", floatDevtools)
+hl.on("window.close", function(w) devtoolsDone[w.address] = nil end)
+
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
 -- uncomment all if you wish to use that.
@@ -332,6 +386,8 @@ hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(menu .. " --launch-prefix=" .
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(floatExec .. terminal))
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(floatExec .. fileManager))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + F",         hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))  -- tela cheia (sem barra nem gaps)
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "maximized",  action = "toggle" }))  -- maximiza no workspace (mantém barra e gaps)
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
 -- Move focus with mainMod + arrow keys
