@@ -25,7 +25,7 @@ stow -D -t ~ kitty                # desfaz um pacote
 | `dunst` | notificações (SUPER+, fecha, SUPER+SHIFT+, histórico) |
 | `xdg` | `.config/user-dirs.dirs` em kebab-case (`~/downloads`, `~/pictures`...) + `user-dirs.conf` com `enabled=False` |
 | `yazi` | `.config/yazi/theme.toml`: moldura na paleta navy; as cores dos arquivos seguem as ANSI do terminal |
-| `claude` | `.claude/accounts/gogroup/CLAUDE.md` global (ex.: não usar o `/tmp`, que é RAM, para repos e `node_modules`) |
+| `claude` | `.claude/CLAUDE.md` global (ex.: não usar o `/tmp`, que é RAM, para repos e `node_modules`); com `CLAUDE_CONFIG_DIR`, ligue `ln -s ~/.claude/CLAUDE.md "$CLAUDE_CONFIG_DIR/CLAUDE.md"` |
 | `systemd` | units de usuário: `claude-tmp-clean.timer` roda o `claude-tmp-clean` de hora em hora; `wallpaper-rotate.timer` passa para o próximo wallpaper a cada hora |
 
 Dependências (pacman): `zsh zsh-autosuggestions zsh-syntax-highlighting zsh-completions fzf zoxide stow kitty ttf-jetbrains-mono-nerd grim slurp satty wf-recorder wl-clipboard jq xdg-user-dirs waybar fuzzel dunst cliphist hyprpicker hyprlock hypridle udiskie yazi ffmpegthumbnailer poppler fd 7zip imagemagick bluetui wiremix pamixer playerctl`.
