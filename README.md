@@ -8,7 +8,7 @@ Branch `wsl2`: Arch no WSL2 (layout plano, sem stow).
 ```bash
 git clone -b arch git@github.com:leomp12/dotfiles.git ~/code/leomp12/dotfiles
 cd ~/code/leomp12/dotfiles
-stow -t ~ zsh bin kitty hypr satty xdg waybar fuzzel dunst yazi claude systemd  # cria os symlinks no $HOME
+stow -t ~ zsh bin kitty hypr satty xdg waybar fuzzel dunst yazi fontconfig claude systemd  # cria os symlinks no $HOME
 systemctl --user enable --now claude-tmp-clean.timer wallpaper-rotate.timer
 stow -D -t ~ kitty                # desfaz um pacote
 ```
@@ -25,6 +25,7 @@ stow -D -t ~ kitty                # desfaz um pacote
 | `dunst` | notificações (SUPER+, fecha, SUPER+SHIFT+, histórico) |
 | `xdg` | `.config/user-dirs.dirs` em kebab-case (`~/downloads`, `~/pictures`...) + `user-dirs.conf` com `enabled=False` |
 | `yazi` | `.config/yazi/theme.toml`: moldura na paleta navy; as cores dos arquivos seguem as ANSI do terminal |
+| `fontconfig` | `.config/fontconfig/fonts.conf`: `sans-serif` e `system-ui` = Adwaita Sans (a Inter do GNOME, mesma fonte da UI do GTK), com Noto Sans de fallback; serif e mono seguem as Noto do sistema |
 | `claude` | `.claude/CLAUDE.md` global (ex.: não usar o `/tmp`, que é RAM, para repos e `node_modules`); com `CLAUDE_CONFIG_DIR`, ligue `ln -s ~/.claude/CLAUDE.md "$CLAUDE_CONFIG_DIR/CLAUDE.md"` |
 | `systemd` | units de usuário: `claude-tmp-clean.timer` roda o `claude-tmp-clean` de hora em hora; `wallpaper-rotate.timer` passa para o próximo wallpaper a cada hora |
 
