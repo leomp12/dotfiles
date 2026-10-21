@@ -1,0 +1,13 @@
+#!/bin/bash
+# Lista de pastas no Vicinae (dmenu) e abre o Claude Code na escolhida (SUPER+A).
+# Ordem: home, depois zoxide (frecência), depois os repos de ~/code que o zoxide ainda não conhece.
+# Não chamar de dentro de um script do Vicinae: o dmenu trava esperando o próprio Vicinae.
+set -uo pipefail
+# se a lista fecha sem escolha (clique fora), o Vicinae não avisa o dmenu, que fica pendurado e
+# rouba a resposta da próxima lista: encerra qualquer lista anterior antes de abrir esta
+pkill -f '^vicinae dmenu -n Claude Code' 2>/dev/null
+choice=$({ echo "~"; zoxide query -l 2>/dev/null; ls -d "$HOME"/code/*/*/ 2>/dev/null | sed 's#/$##'; } |
+  sed "s#^$HOME#~#" | awk '!seen[$0]++' |
+  timeout 600 vicinae dmenu -n "Claude Code in Folder" -p "Claude Code in folder…" -s "Claude Code in Folder · {count} folders" --no-quick-look) || exit 0
+[ -n "$choice" ] || exit 0
+exec "$HOME/.bin/claude-here" "${choice/#\~/$HOME}"

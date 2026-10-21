@@ -1,0 +1,28 @@
+// Config versionada no dotfiles. O settings.json (reescrito pela GUI, fora do repo) importa este arquivo:
+//   "imports": ["./dotfiles.jsonc"]
+// e guarda o que é local, como as pastas excluídas da busca de arquivos (providers.files.preferences.excludedIndexingPaths).
+{
+	"telemetry": { "system_info": false },
+	"favicon_service": "none",            // não manda os domínios para um serviço externo de favicons
+	"tray": { "enabled": false },
+	"search_files_in_root": true,          // apps, arquivos e pastas na mesma busca
+	"pop_to_root_on_close": true,
+	"escape_key_behavior": "close_window",
+	"font": { "normal": { "family": "JetBrainsMono Nerd Font" } },
+	"theme": { "dark": { "name": "navy", "icon_theme": "auto" }, "light": { "name": "navy", "icon_theme": "auto" } },
+	"launcher_window": {
+		"rounding": 6,
+		"opacity": 0.93,                    // como o fuzzel (15233dee), com o blur do Hyprland
+		"material": "blur",
+		"client_side_decorations": { "enabled": true, "border_width": 1, "shadow_size": 0 },
+		// exclusive quebra o mouse nos popups (painel de ações) no Hyprland
+		"layer_shell": { "enabled": true, "keyboard_interactivity": "on_demand", "layer": "top" }
+	},
+	"close_on_focus_loss": true,
+	// os atalhos (SUPER+R, SUPER+SPACE, SUPER+V, SUPER+A) são binds do Hyprland; tira o atalho global próprio (Super+Ctrl+Space, que já troca o wallpaper)
+	"global_shortcuts": { "toggle": "" },
+	"favorites": ["clipboard:history"],
+	"fallbacks": ["scripts:google.sh", "scripts:ask-claude.sh", "files:search"],
+	// apps abrem por vicinae-launch (~/.bin): flutuando se o launcher veio do SUPER+SHIFT+R
+	"providers": { "applications": { "preferences": { "launchPrefix": "vicinae-launch" } } }
+}

@@ -37,7 +37,6 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "kitty"
 local fileManager = terminal .. " --class yazi -e yazi"  -- yazi no kitty; Nautilus fica no launcher (arrastar arquivos, miniaturas)
-local menu        = "fuzzel"
 
 
 -------------------
@@ -60,9 +59,8 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("waybar")
     hl.exec_cmd("dunst")
-    hl.exec_cmd("wl-paste --type text --watch cliphist store")
-    hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("udiskie --automount --notify")
+    hl.exec_cmd("systemctl --user start vicinae") -- launcher (SUPER+SPACE); o service reinicia sozinho se cair
     hl.exec_cmd("hypridle") -- lock após 30 min sem input (hypridle.conf)
     hl.exec_cmd(os.getenv("HOME") .. "/.bin/ssh-unlock </dev/null") -- pede a passphrase num kitty se o agent estiver vazio (aparece ao desbloquear); </dev/null: senão herda o tty1 e o ssh-add espera lá, invisível
 end)
@@ -357,14 +355,14 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(terminal .. " --class claude -e claude")) -- kitty com o Claude Code
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/claude-pick")) -- Claude Code: escolhe a pasta numa lista do Vicinae
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), { locked = true }) -- trava a tela; locked: reabre o hyprlock após crash
 -- Screenshots (grim + slurp + satty) e gravação (wf-recorder), ver ~/.bin/screenshot e ~/.bin/screenrecord
 hl.bind("Print",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot menu")) -- menu: área/janela/tela/gravação
 hl.bind("SHIFT + Print",  hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot window"))
 hl.bind("CTRL + Print",   hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot output"))
 -- Clipboard, cor e notificações
-hl.bind(mainMod .. " + CTRL + V",     hl.dsp.exec_cmd("cliphist list | fuzzel --dmenu --prompt='clip ❯ ' | cliphist decode | wl-copy"))
+hl.bind(mainMod .. " + V",            hl.dsp.exec_cmd("vicinae vicinae://launch/clipboard/history"))  -- histórico do clipboard, como o Win+V
 hl.bind(mainMod .. " + Print",        hl.dsp.exec_cmd("hyprpicker -a"))  -- conta-gotas, copia a cor
 hl.bind(mainMod .. " + CTRL + SPACE",         hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/wallpaper next"))  -- próximo wallpaper
 hl.bind(mainMod .. " + CTRL + SHIFT + SPACE", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/wallpaper prev"))
@@ -378,11 +376,12 @@ hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd([[
   { command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'; }
 ]]))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))  -- alterna flutuante/tiled (como no Omarchy)
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/vicinae-launch --apps"))  -- lista de apps do Vicinae
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/vicinae-launch --tiled"))  -- busca completa do Vicinae: apps, arquivos, calculadora, web, Claude
 -- SHIFT = mesma coisa, mas a janela já abre flutuando e centralizada (bin/float-exec)
 local floatExec = os.getenv("HOME") .. "/.bin/float-exec "
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(menu .. " --launch-prefix=" .. floatExec))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/vicinae-launch --float")) -- lista de apps do Vicinae; o app abre flutuando
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(floatExec .. terminal))
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(floatExec .. fileManager))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
@@ -477,6 +476,8 @@ hl.window_rule({
 --     no_anim = true,
 -- })
 -- overlayLayerRule:set_enabled(false)
+
+hl.layer_rule({ name = "vicinae", match = { namespace = "vicinae" }, no_anim = true, blur = true, ignore_alpha = 0 })
 
 -- TUIs abertos pela waybar (bluetui, nmtui, wiremix) flutuam centralizados
 hl.window_rule({

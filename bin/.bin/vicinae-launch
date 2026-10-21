@@ -1,0 +1,19 @@
+#!/bin/bash
+# launchPrefix do Vicinae: abre o app normal (tiled) ou flutuando, conforme o atalho que abriu o launcher.
+#   vicinae-launch --apps    limpa a marca e abre a lista de apps do Vicinae (SUPER+R)
+#   vicinae-launch --float   idem, mas o app escolhido abre flutuando (SUPER+SHIFT+R)
+#   vicinae-launch --tiled   limpa a marca e abre a busca completa do Vicinae (SUPER+SPACE)
+#   vicinae-launch <cmd...>  chamado pelo Vicinae ao abrir um app (prefixo)
+flag="${XDG_RUNTIME_DIR:-/run/user/$UID}/vicinae-float"
+case "${1:-}" in
+  --float) touch "$flag"; exec vicinae vicinae://launch/system/browse-apps ;;   # só a lista de apps
+  --tiled) rm -f "$flag"; exec vicinae toggle ;;
+  --apps)  rm -f "$flag"; exec vicinae vicinae://launch/system/browse-apps ;;
+esac
+# a marca vale só para o próximo app, e só se recente (launcher aberto e fechado sem abrir nada não deixa resto)
+if m=$(stat -c %Y "$flag" 2>/dev/null) && [ $(( $(date +%s) - m )) -lt 120 ]; then
+  rm -f "$flag"
+  exec "$HOME/.bin/float-exec" "$@"
+fi
+rm -f "$flag"
+exec "$@"

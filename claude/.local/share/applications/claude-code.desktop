@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Claude Code
+Comment=Open a Claude Code session in the folder
+Exec=claude-here %f
+Icon=utilities-terminal
+Terminal=false
+MimeType=inode/directory;
+Categories=Development;

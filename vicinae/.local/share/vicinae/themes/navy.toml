@@ -1,0 +1,73 @@
+# Vicinae na paleta navy dos wallpapers (README: "Paleta")
+[meta]
+name = "Navy"
+description = "Paleta navy do Hyprland/waybar/fuzzel"
+variant = "dark"
+inherits = "vicinae-dark"
+
+[colors.core]
+accent = "#9db4d6"
+accent_foreground = "#0b1628"
+background = "#15233d"
+foreground = "#dbe4f2"
+secondary_background = "#0b1628"
+border = "#2a3d61"
+
+[colors.main_window]
+border = "#9db4d6"   # igual ao fuzzel e à borda da janela em foco
+
+[colors.settings_window]
+border = "#2a3d61"
+
+[colors.accents]
+blue = "#9db4d6"
+green = "#9fd0a0"
+magenta = "#c3a6d9"
+orange = "#e0a878"
+red = "#e0707a"
+yellow = "#d9c39a"
+cyan = "#8fc7c9"
+purple = "#c3a6d9"
+
+[colors.text]
+muted = "#8195b8"
+danger = "#e0707a"
+success = "#9fd0a0"
+placeholder = "#5d7196"
+selection = { background = "#9db4d6", foreground = "#0b1628" }
+
+[colors.text.links]
+default = "#9db4d6"
+visited = "#c3a6d9"
+
+[colors.input]
+border = "#2a3d61"
+border_focus = "#9db4d6"
+border_error = "#e0707a"
+
+[colors.button.primary]
+background = "#0b1628"
+foreground = "#dbe4f2"
+hover = { background = "#2e4570" }
+
+[colors.list.item.hover]
+foreground = "#e6edf7"
+secondary_foreground = "#e6edf7"
+
+[colors.list.item.selection]
+background = "#2e4570"
+foreground = "#e6edf7"
+secondary_background = "#2e4570"
+secondary_foreground = "#e6edf7"
+
+[colors.grid.item]
+background = "#0b1628"
+hover = { outline = "#8195b8" }
+selection = { outline = "#9db4d6" }
+
+[colors.scrollbars]
+background = "#2a3d61"
+
+[colors.loading]
+bar = "#9db4d6"
+spinner = "#dbe4f2"

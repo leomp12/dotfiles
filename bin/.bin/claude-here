@@ -1,0 +1,13 @@
+#!/bin/bash
+# Abre uma sessão do Claude Code num kitty na pasta dada (arquivo = pasta dele; sem argumento = $HOME).
+#   claude-here ~/code/repo
+# Roda pelo Hyprland, então o kitty herda o ambiente da sessão (CLAUDE_CONFIG_DIR etc.) mesmo chamado
+# pelo service do Vicinae ou outro processo fora da sessão.
+set -euo pipefail
+dir="${1:-$HOME}"
+dir="${dir#file://}"
+[ -d "$dir" ] || dir="$(dirname -- "$dir")"
+[ -d "$dir" ] || { notify-send -i dialog-error "Claude Code" "Folder not found: $1"; exit 1; }
+cmd="kitty --class claude --directory $(printf %q "$(realpath -- "$dir")") -e claude"
+eq='='; while [[ $cmd == *"]$eq]"* ]]; do eq+='='; done   # string longa Lua que o comando não consegue fechar
+hyprctl -q dispatch "hl.dsp.exec_cmd([$eq[$cmd]$eq])"
