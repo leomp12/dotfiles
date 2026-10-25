@@ -1,0 +1,30 @@
+#!/bin/bash
+# Deixa os serviços claude-rc@<nome> iguais a ~/.config/claude-rc/servers: habilita e sobe os listados,
+# para e desabilita os que saíram da lista. Sobem também no boot (linger), sem precisar de login.
+#   claude-rc-setup            aplica
+#   claude-rc-setup --status   só mostra o estado
+set -euo pipefail
+conf="$HOME/.config/claude-rc/servers"
+want=$(awk '!/^[[:space:]]*(#|$)/ { print $1 }' "$conf")
+have=$(systemctl --user list-units --all --plain --no-legend 'claude-rc@*.service' | awk '{ print $1 }' |
+  sed 's/^claude-rc@//; s/\.service$//')
+have=$(printf '%s\n%s\n' "$have" "$(cd ~/.config/systemd/user/default.target.wants 2>/dev/null &&
+  ls -1 claude-rc@*.service 2>/dev/null | sed 's/^claude-rc@//; s/\.service$//')" | awk 'NF && !seen[$0]++')
+
+if [ "${1:-}" != --status ]; then
+  [ "$(loginctl show-user "$USER" -p Linger --value)" = yes ] ||
+    echo "aviso: sem linger os servidores só sobem no login (sudo loginctl enable-linger $USER)" >&2
+  systemctl --user daemon-reload
+  for n in $have; do
+    grep -qx -- "$n" <<<"$want" || { echo "removendo $n"; systemctl --user disable --now "claude-rc@$n.service"; }
+  done
+  for n in $want; do systemctl --user enable --now "claude-rc@$n.service" 2>&1 | grep -v '^Created symlink' || true; done
+  sleep 8   # tempo para conectar
+fi
+
+for n in $want; do
+  st=$(systemctl --user is-active "claude-rc@$n.service" || true)
+  ready=$(journalctl --user -u "claude-rc@$n.service" -n 30 --no-pager -o cat 2>/dev/null |
+    sed 's/\x1b\[[0-9;?]*[a-zA-Z]//g' | grep -o 'Ready ·.*\|Error.*\|error.*' | tail -1 || true)
+  printf '%-18s %-10s %s\n' "$n" "$st" "$ready"
+done

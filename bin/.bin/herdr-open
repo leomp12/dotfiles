@@ -1,0 +1,50 @@
+#!/bin/bash
+# Janela única do herdr (multiplexador de agentes) num kitty com classe herdr.
+#   herdr-open          traz a janela para frente; abre o kitty com o herdr se não houver (SUPER+H)
+#   herdr-open <pasta>  idem, e cria um workspace na pasta com o Claude Code rodando (SUPER+A)
+#                       (pasta que não existe vira busca no zoxide: herdr-open dotfiles)
+# Também funciona por SSH (cc do WSL): acha a sessão do Hyprland e sobe a janela lá antes de anexar.
+set -euo pipefail
+
+if [ -z "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+  HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance // empty')
+  export HYPRLAND_INSTANCE_SIGNATURE
+fi
+
+fail() { echo "herdr-open: $1" >&2; notify-send -i dialog-error "Claude Code" "$1" 2>/dev/null || true; exit 1; }
+window_up() { hyprctl -j clients | jq -e 'any(.[]; .class == "herdr")' >/dev/null; }
+
+if window_up; then
+  hyprctl -q dispatch 'hl.dsp.focus({ window = "class:^herdr$" })'
+else
+  # via exec_cmd do Hyprland: o servidor do herdr nasce com o env da sessão (CLAUDE_CONFIG_DIR etc.)
+  hyprctl -q dispatch 'hl.dsp.exec_cmd("kitty --class herdr -e herdr")'
+fi
+[ $# -gt 0 ] || exit 0
+
+dir="${1#file://}"
+[ -e "$dir" ] || dir=$(zoxide query -- "$dir" 2>/dev/null) || dir="$1"
+[ -f "$dir" ] && dir="$(dirname -- "$dir")"
+[ -d "$dir" ] || fail "Folder not found: $1"
+dir="$(realpath -- "$dir")"
+
+# espera o servidor (e a janela) subirem
+for _ in $(seq 50); do
+  herdr workspace list >/dev/null 2>&1 && window_up && break
+  sleep 0.2
+done
+
+# nome do agente: [a-z][a-z0-9_-]{0,31}, único entre os vivos
+base=$(basename -- "$dir" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9_-' '-' | sed 's/^[^a-z]*//; s/-*$//' | cut -c1-28)
+[ -n "$base" ] || base=home
+taken=$(herdr agent list 2>/dev/null | jq -r '.. | .name? // empty' 2>/dev/null || true)
+name=$base; n=1
+while grep -qx -- "$name" <<<"$taken"; do n=$((n + 1)); name="$base-$n"; done
+
+if ! out=$(herdr workspace create --cwd "$dir" --label "$(basename -- "$dir")" --focus 2>&1) ||
+   ! pane=$(jq -er '.result.root_pane.pane_id' <<<"$out") ||
+   { ! out=$(herdr agent start "$name" --kind claude --pane "$pane" 2>&1) &&
+     ! grep -q '"agent_not_ready"' <<<"$out"; }; then  # not_ready: parado numa pergunta (ex.: confiar na pasta)
+  fail "herdr: ${out:0:200}"
+fi
+hyprctl -q dispatch 'hl.dsp.focus({ window = "class:^herdr$" })'

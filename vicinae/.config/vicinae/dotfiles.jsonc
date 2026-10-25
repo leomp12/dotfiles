@@ -15,8 +15,10 @@
 		"opacity": 0.93,                    // como o fuzzel (15233dee), com o blur do Hyprland
 		"material": "blur",
 		"client_side_decorations": { "enabled": true, "border_width": 1, "shadow_size": 0 },
-		// exclusive quebra o mouse nos popups (painel de ações) no Hyprland
-		"layer_shell": { "enabled": true, "keyboard_interactivity": "on_demand", "layer": "top" }
+		// exclusive: segura o teclado enquanto aberto. Com on_demand + follow_mouse do Hyprland, o mouse passando
+		// por outra janela tirava o foco e o close_on_focus_loss fechava o launcher. Custo: cliques nos popups
+		// (painel de ações) podem falhar no Hyprland; pelo teclado (Ctrl+B, Ctrl+O) funciona
+		"layer_shell": { "enabled": true, "keyboard_interactivity": "exclusive", "layer": "top" }
 	},
 	"close_on_focus_loss": true,
 	// os atalhos (SUPER+R, SUPER+SPACE, SUPER+V, SUPER+A) são binds do Hyprland; tira o atalho global próprio (Super+Ctrl+Space, que já troca o wallpaper)

@@ -114,9 +114,9 @@ hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
-        -- minimalista: gaps_in vale para cada lado da janela, então 2 = 4px entre duas janelas; 8px até a borda da tela
+        -- minimalista: gaps_in vale para cada lado da janela, então 2 = 4px entre duas janelas; 6px até a borda da tela
         gaps_in  = 2,
-        gaps_out = 8,
+        gaps_out = 6,
 
         border_size = 2,
 
@@ -355,7 +355,8 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/claude-pick")) -- Claude Code: escolhe a pasta numa lista do Vicinae
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/claude-pick")) -- Claude Code: escolhe a pasta (fzf num kitty flutuante) e abre no herdr
+hl.bind(mainMod .. " + H", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/herdr-open"))  -- janela do herdr (agentes)
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), { locked = true }) -- trava a tela; locked: reabre o hyprlock após crash
 -- Screenshots (grim + slurp + satty) e gravação (wf-recorder), ver ~/.bin/screenshot e ~/.bin/screenrecord
 hl.bind("Print",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot menu")) -- menu: área/janela/tela/gravação
@@ -363,6 +364,7 @@ hl.bind("SHIFT + Print",  hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot
 hl.bind("CTRL + Print",   hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/screenshot output"))
 -- Clipboard, cor e notificações
 hl.bind(mainMod .. " + V",            hl.dsp.exec_cmd("vicinae vicinae://launch/clipboard/history"))  -- histórico do clipboard, como o Win+V
+hl.bind(mainMod .. " + period",       hl.dsp.exec_cmd("vicinae vicinae://launch/core/search-emojis"))  -- emojis, como o Win+.
 hl.bind(mainMod .. " + Print",        hl.dsp.exec_cmd("hyprpicker -a"))  -- conta-gotas, copia a cor
 hl.bind(mainMod .. " + CTRL + SPACE",         hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/wallpaper next"))  -- próximo wallpaper
 hl.bind(mainMod .. " + CTRL + SHIFT + SPACE", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.bin/wallpaper prev"))

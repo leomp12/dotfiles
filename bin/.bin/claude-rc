@@ -1,0 +1,25 @@
+#!/bin/bash
+# Sobe um servidor do Remote Control descrito em ~/.config/claude-rc/servers (ExecStart do claude-rc@.service).
+#   claude-rc meu-app
+# O systemd --user sobe no boot (linger), antes do login: não tem o ambiente da sessão, então monta aqui.
+set -euo pipefail
+name=${1:?usage: claude-rc <nome>}
+conf="$HOME/.config/claude-rc/servers"
+
+read -r _ dir spawn < <(awk -v n="$name" '$1 == n { print; exit }' "$conf") ||
+  { echo "claude-rc: \"$name\" não está em $conf" >&2; exit 2; }   # 2: erro de config, o serviço não insiste
+dir="${dir/#\~/$HOME}"
+spawn=${spawn:-worktree}
+[ -d "$dir" ] || { echo "claude-rc: pasta não existe: $dir" >&2; exit 2; }
+
+# mesmo PATH do ~/.profile (claude, shims do mise, bun, pnpm, ~/.bin) e o CLAUDE_CONFIG_DIR do ~/.profile.local
+export PATH="$HOME/.local/share/pnpm:$HOME/.local/share/mise/shims:$HOME/.local/bin:/usr/local/bin:/usr/bin:$HOME/.bin:$HOME/.bun/bin"
+export PNPM_HOME="$HOME/.local/share/pnpm" BUN_INSTALL="$HOME/.bun" npm_config_loglevel=error
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+# sem -eu: um erro bobo no arquivo local não pode derrubar o serviço
+if [ -f "$HOME/.profile.local" ]; then set +eu; . "$HOME/.profile.local"; set -eu; fi
+
+cd "$dir"
+# --no-create-session-in-dir: sem sessão pré-aberta (~370 MB cada); o servidor parado fica em ~150 MB
+exec claude remote-control --spawn "$spawn" --no-create-session-in-dir \
+  --remote-control-session-name-prefix "$name"

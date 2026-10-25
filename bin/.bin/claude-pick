@@ -1,13 +1,26 @@
 #!/bin/bash
-# Lista de pastas no Vicinae (dmenu) e abre o Claude Code na escolhida (SUPER+A).
-# Ordem: home, depois zoxide (frecência), depois os repos de ~/code que o zoxide ainda não conhece.
-# Não chamar de dentro de um script do Vicinae: o dmenu trava esperando o próprio Vicinae.
+# Lista de pastas no fzf (kitty flutuante) e abre o Claude Code na escolhida, num workspace do herdr (SUPER+A).
+# Ordem: zoxide (frecência), depois os repos de ~/code que o zoxide ainda não conhece, e a home por último
+# (na home o Claude sempre pergunta se confia na pasta, e o padrão da pergunta é sair).
+# Era o dmenu do Vicinae, mas ele perdia a escolha (ia para uma lista anterior já morta) ou devolvia o
+# primeiro item sozinho quando chamado em sequência.
 set -uo pipefail
-# se a lista fecha sem escolha (clique fora), o Vicinae não avisa o dmenu, que fica pendurado e
-# rouba a resposta da próxima lista: encerra qualquer lista anterior antes de abrir esta
-pkill -f '^vicinae dmenu -n Claude Code' 2>/dev/null
-choice=$({ echo "~"; zoxide query -l 2>/dev/null; ls -d "$HOME"/code/*/*/ 2>/dev/null | sed 's#/$##'; } |
-  sed "s#^$HOME#~#" | awk '!seen[$0]++' |
-  timeout 600 vicinae dmenu -n "Claude Code in Folder" -p "Claude Code in folder…" -s "Claude Code in Folder · {count} folders" --no-quick-look) || exit 0
+
+if [ -z "${CLAUDE_PICK_TERM:-}" ]; then
+  # chamado pelo Hyprland: reabre a si mesmo num kitty flutuante (um só; se já aberto, só foca).
+  # Não dá para usar -t 0: o Hyprland sobe do TTY e os filhos herdam um terminal no stdin.
+  if hyprctl -j clients | jq -e 'any(.[]; .class == "claude-pick")' >/dev/null; then
+    exec hyprctl -q dispatch 'hl.dsp.focus({ window = "class:^claude-pick$" })'
+  fi
+  read -r w h < <(hyprctl -j monitors | jq -r '.[] | select(.focused) | "\(.width / .scale * 0.4 | floor) \(.height / .scale * 0.45 | floor)"')
+  exec hyprctl -q dispatch "hl.dsp.exec_cmd('CLAUDE_PICK_TERM=1 kitty --class claude-pick -o confirm_os_window_close=0 -e $HOME/.bin/claude-pick', { float = true, size = '$w $h', center = true })"
+fi
+
+choice=$({ zoxide query -l 2>/dev/null; ls -d "$HOME"/code/*/*/ 2>/dev/null | sed 's#/$##'; echo "$HOME"; } |
+  { grep -vx -- "$HOME" || true; } | { cat; echo "$HOME"; } | sed "s#^$HOME\(/\|\$\)#~\1#" | awk '!seen[$0]++' |
+  fzf --prompt 'Claude Code in folder › ' --layout reverse --info inline-right --border none \
+      --scheme path --tiebreak end) || exit 0
 [ -n "$choice" ] || exit 0
-exec "$HOME/.bin/claude-here" "${choice/#\~/$HOME}"
+# setsid e sem o terminal (nem stdin): o kitty só fecha quando ninguém mais usa o pty, e o herdr-open
+# ainda leva uns segundos esperando o herdr; assim a janela fecha logo após a escolha
+setsid -f "$HOME/.bin/herdr-open" "${choice/#\~/$HOME}" </dev/null >/dev/null 2>&1

@@ -1,0 +1,10 @@
+# Servidores do Remote Control (claude.ai/code e app do Claude), um serviço claude-rc@<nome> cada.
+# Copie para "servers" (local, fora do git) e ajuste; depois de mudar: claude-rc-setup
+# (habilita os daqui, para e desabilita os que saíram).
+#
+# nome             pasta                             spawn
+# worktree: cada sessão nova ganha um worktree em .claude/worktrees do repo; same-dir: todas na pasta.
+meu-app            ~/code/org/meu-app                worktree
+outro-repo         ~/code/org/outro-repo             worktree
+# coringa: ~/code não é repo git, então same-dir; a sessão vai para a pasta certa pedindo ao Claude
+code               ~/code                            same-dir

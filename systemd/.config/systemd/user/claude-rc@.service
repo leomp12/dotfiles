@@ -1,0 +1,17 @@
+[Unit]
+Description=Claude Code Remote Control: %i (ver ~/.config/claude-rc/servers)
+# sem rede no boot o claude sai com erro; o Restart tenta de novo
+StartLimitIntervalSec=0
+
+[Service]
+ExecStart=%h/.bin/claude-rc %i
+Restart=always
+RestartSec=15
+# 2 = nome fora da lista ou pasta que não existe: reiniciar não resolve
+RestartPreventExitStatus=2
+# sessões abertas pelo app são filhas deste serviço: parar/reiniciar o serviço encerra elas também
+KillMode=control-group
+StandardInput=null
+
+[Install]
+WantedBy=default.target
