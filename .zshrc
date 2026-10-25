@@ -47,3 +47,10 @@ claude() {
 }
 
 export PATH="$HOME/.local/bin:$PATH"
+
+# Claude Code no leo-arch-dev pelo herdr (sessões persistem lá; sair do SSH não mata nada).
+#   cc          entra no herdr do PC
+#   cc <pasta>  abre antes um Claude Code na pasta (caminho do PC ou busca do zoxide de lá), num workspace novo
+cc() {
+  ssh -t leo-arch-dev "${1:+.bin/herdr-open ${(q)1} && }exec herdr"
+}
