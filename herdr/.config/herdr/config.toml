@@ -1,0 +1,29 @@
+onboarding = false
+# herdr (multiplexador de agentes)
+# Referência: `herdr --default-config` e https://herdr.dev/docs/configuration/
+
+[update]
+# Instalado via pacman (AUR herdr-bin): atualizar com yay, nunca `herdr update`.
+# O check em background só avisa; não baixa nada.
+version_check = true
+
+[worktrees]
+# Worktrees fora dos snapshots do snapper (~/code é subvolume aninhado em @home).
+directory = "~/code/_worktrees"
+
+[ui.sidebar.agents.rows_by_agent]
+# Claude Code põe o título da sessão no título do terminal; mostra isso na sidebar.
+claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"]]
+
+[keys]
+# prefix+n cria space (abas: Alt+1..9 e Alt+←/→; spaces: Alt+↑/↓)
+new_workspace = "prefix+n"
+previous_tab = "alt+left"   # Alt+←/→ troca de aba
+next_tab = "alt+right"
+previous_workspace = "alt+up"  # Alt+↑/↓ troca de space
+next_workspace = "alt+down"
+cycle_pane_next = "alt+tab"  # alterna entre panes divididos sem prefixo
+
+[keys.indexed]
+# Alt+1..9 vai direto para a aba N do space atual (Super é do Hyprland, Alt fica livre)
+tabs = "alt"
