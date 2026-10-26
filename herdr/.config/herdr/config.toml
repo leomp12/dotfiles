@@ -20,11 +20,13 @@ prompt_new_tab_name = false
 claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"]]
 
 [keys]
-# prefix+n cria space (abas: Alt+1..9 e Alt+←/→; spaces: Alt+↑/↓)
+# prefix+n cria space (abas: Alt+1..9; panes: Alt+←/→; spaces: Alt+↑/↓)
 new_workspace = "prefix+n"
 new_tab = ["prefix+t", "prefix+c"]  # t de tab; c mantido como padrão do tmux
-previous_tab = "alt+left"   # Alt+←/→ troca de aba
-next_tab = "alt+right"
+previous_tab = ""  # sem atalho: aba é Alt+1..9 (o padrão prefix+n bateria com new_workspace)
+next_tab = ""
+focus_pane_left = ["prefix+h", "alt+left"]  # Alt+←/→ foca o pane ao lado na mesma aba
+focus_pane_right = ["prefix+l", "alt+right"]
 previous_workspace = "alt+up"  # Alt+↑/↓ troca de space
 next_workspace = "alt+down"
 cycle_pane_next = "alt+tab"  # alterna entre panes divididos sem prefixo
