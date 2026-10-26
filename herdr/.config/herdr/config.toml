@@ -14,6 +14,7 @@ directory = "~/code/_worktrees"
 [ui]
 # Nova aba já nasce com nome gerado, sem perguntar.
 prompt_new_tab_name = false
+pane_borders = "always"  # moldura e respiro abaixo da barra de abas mesmo com um pane só
 
 [ui.sidebar.agents.rows_by_agent]
 # Claude Code põe o título da sessão no título do terminal; mostra isso na sidebar.
