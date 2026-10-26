@@ -37,3 +37,8 @@ background = "#3a1218d9"
 foreground = "#dbe4f2"
 frame_color = "#e0707a"
 timeout = 0
+
+# Slack sem pop-up: o aviso é a bolinha no ícone da bandeja da waybar (a notificação fica no histórico)
+[slack]
+appname = "Slack"
+skip_display = true
