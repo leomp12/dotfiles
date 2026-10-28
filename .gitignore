@@ -1,1 +1,3 @@
 systemd/.config/claude-rc/servers
+# CLAUDE.md global fica por conta em ~/.claude/accounts/<conta>/ (sync via Syncthing), nunca no repo público
+claude/.claude/CLAUDE.md
