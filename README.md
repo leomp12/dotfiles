@@ -8,10 +8,21 @@ Branch `wsl2`: Arch no WSL2 (layout plano, sem stow).
 ```bash
 git clone -b arch git@github.com:leomp12/dotfiles.git ~/code/leomp12/dotfiles
 cd ~/code/leomp12/dotfiles
-stow -t ~ zsh bin kitty hypr satty xdg waybar fuzzel dunst yazi vicinae fontconfig claude systemd herdr  # cria os symlinks no $HOME
+stow -t ~ zsh kitty hypr satty xdg waybar fuzzel dunst yazi vicinae fontconfig claude systemd herdr pnpm bun  # cria os symlinks no $HOME
+stow -R --no-folding -t ~ bin mise  # -R desfaz um ~/.bin antigo que era link da pasta inteira; liga arquivo a arquivo: script ou config novo que um app/agente criar ali fica fora do repo
+git config core.hooksPath hooks  # pre-commit contra vazamento, ver "Repo público" abaixo
 systemctl --user enable --now claude-tmp-clean.timer wallpaper-rotate.timer
 stow -D -t ~ kitty                # desfaz um pacote
 ```
+
+## Repo público
+
+O repo é público e vários arquivos são links que programas e agentes reescrevem, então nada interno pode cair aqui:
+
+- `hooks/pre-commit` roda o `gitleaks` no diff staged e barra termos de uma lista local, fora do git (`~/.config/dotfiles/deny-terms`, uma regex por linha; outra lista com `DOTFILES_DENY_TERMS`). Falso positivo: `git commit --no-verify`.
+- Exports, tokens e ajustes só da máquina vão no `~/.profile.local`, que o `.profile` carrega (ver `zsh` abaixo).
+- `bin` e `mise` são ligados com `--no-folding`: arquivo novo em `~/.bin` ou `~/.config/mise` fica fora do repo. Script para versionar nasce em `bin/.bin/` e depois `stow --no-folding -t ~ bin`.
+- O `CLAUDE.md` global não entra (ver `claude` abaixo).
 
 | Pacote | Conteúdo |
 |---|---|
